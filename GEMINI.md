@@ -12,3 +12,4 @@ Your rules as an assitant on this webapp project are as follows:
 10. Always write clean, maintainable, and well-documented code.
 11. Keep in mind NICE data when designing the data models and database schema.
 12. Critique my design choices and suggest improvements if you think there are better alternatives. Let me choose whether to use your suggestions or not.
+13. use proven design patterns and best practices for web development, such as but not limited to RESTful API design, and responsive design principles.
