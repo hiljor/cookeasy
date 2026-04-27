@@ -27,7 +27,16 @@ func Connect() {
 	fmt.Println("Database connection established")
 
 	// Run migrations
-	err = db.AutoMigrate(&models.User{}, &models.RefreshToken{}, &models.UserSettings{})
+	err = db.AutoMigrate(
+		&models.User{},
+		&models.RefreshToken{},
+		&models.UserSettings{},
+		&models.FriendRequest{},
+		&models.Friendship{},
+		&models.Group{},
+		&models.GroupMembership{},
+		&models.GroupInvite{},
+	)
 	if err != nil {
 		log.Fatal("Failed to run migrations:", err)
 	}

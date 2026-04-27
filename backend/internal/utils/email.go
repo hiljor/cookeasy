@@ -24,3 +24,20 @@ func SendVerificationEmail(to, username, token string) error {
 	_, err := client.Emails.Send(params)
 	return err
 }
+
+func SendPasswordResetEmail(to, username, token string) error {
+	apiKey := os.Getenv("RESEND_API_KEY")
+	client := resend.NewClient(apiKey)
+
+	resetLink := fmt.Sprintf("%s/reset-password?token=%s", os.Getenv("FRONTEND_URL"), token)
+
+	params := &resend.SendEmailRequest{
+		From:    "Cookeasy <onboarding@resend.dev>",
+		To:      []string{to},
+		Subject: "Reset your Cookeasy password",
+		Html:    fmt.Sprintf("<h1>Hello, %s</h1><p>You requested a password reset. Click <a href='%s'>here</a> to set a new password. This link expires in 1 hour.</p>", username, resetLink),
+	}
+
+	_, err := client.Emails.Send(params)
+	return err
+}
