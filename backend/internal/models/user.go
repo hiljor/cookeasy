@@ -15,6 +15,7 @@ type User struct {
 	Bio               *string        `json:"bio"`
 	ProfilePictureURL *string        `json:"profile_picture_url"`
 	IsVerified        bool           `gorm:"default:false" json:"is_verified"`
+	VerificationToken string         `json:"-"`
 	CreatedAt         time.Time      `json:"created_at"`
 	UpdatedAt         time.Time      `json:"updated_at"`
 	DeletedAt         gorm.DeletedAt `gorm:"index" json:"-"`

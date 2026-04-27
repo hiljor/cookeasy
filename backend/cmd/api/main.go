@@ -2,6 +2,7 @@ package main
 
 import (
 	"cookeasy/backend/internal/database"
+	"cookeasy/backend/internal/router"
 	"log"
 	"net/http"
 
@@ -19,9 +20,9 @@ func main() {
 	// Connect to Database
 	database.Connect()
 
-	r := gin.Default()
+	r := router.SetupRouter()
 
-	// Health check endpoint
+	// Health check endpoint (moved or kept here)
 	r.GET("/health", func(c *gin.Context) {
 		c.JSON(http.StatusOK, gin.H{
 			"status": "up",

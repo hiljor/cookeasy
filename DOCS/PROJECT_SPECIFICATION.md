@@ -60,10 +60,11 @@ The project will be a monorepo containing both frontend and backend code organis
   - id: uuid
   - username: string
   - email: string
-  - password: string (hashed)
-  - bio: string
-  - profile_picture_url: string
+  - password: string (hashed, hidden from JSON)
+  - bio: string (nullable)
+  - profile_picture_url: string (nullable)
   - is_verified: boolean (default: false)
+  - verification_token: string (hidden from JSON)
   - created_at: iso 8601 timestamp
 - RefreshToken
   - id: uuid
