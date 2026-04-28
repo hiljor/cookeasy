@@ -7,6 +7,7 @@ import (
 	"gorm.io/gorm"
 )
 
+/* RefreshToken stores tokens used to issue new access tokens without requiring re-authentication */
 type RefreshToken struct {
 	ID        uuid.UUID `gorm:"type:uuid;primaryKey" json:"id"`
 	UserID    uuid.UUID `gorm:"type:uuid;not null;index" json:"user_id"`
@@ -15,6 +16,7 @@ type RefreshToken struct {
 	CreatedAt time.Time `json:"created_at"`
 }
 
+/* BeforeCreate ensures a new RefreshToken has a UUID */
 func (rt *RefreshToken) BeforeCreate(tx *gorm.DB) (err error) {
 	if rt.ID == uuid.Nil {
 		rt.ID = uuid.New()

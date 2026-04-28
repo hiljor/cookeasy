@@ -7,15 +7,15 @@ import (
 	"github.com/resend/resend-go/v2"
 )
 
+/* SendVerificationEmail sends a registration confirmation email using the Resend API */
 func SendVerificationEmail(to, username, token string) error {
 	apiKey := os.Getenv("RESEND_API_KEY")
 	client := resend.NewClient(apiKey)
 
-	// In a real app, this would be your frontend URL
 	verificationLink := fmt.Sprintf("%s/verify?token=%s", os.Getenv("FRONTEND_URL"), token)
 
 	params := &resend.SendEmailRequest{
-		From:    "Cookeasy <onboarding@resend.dev>", // Resend default for testing
+		From:    "Cookeasy <onboarding@resend.dev>",
 		To:      []string{to},
 		Subject: "Verify your Cookeasy account",
 		Html:    fmt.Sprintf("<h1>Welcome, %s!</h1><p>Please verify your account by clicking <a href='%s'>here</a>.</p>", username, verificationLink),
@@ -25,6 +25,7 @@ func SendVerificationEmail(to, username, token string) error {
 	return err
 }
 
+/* SendPasswordResetEmail sends an email with a unique token for account recovery */
 func SendPasswordResetEmail(to, username, token string) error {
 	apiKey := os.Getenv("RESEND_API_KEY")
 	client := resend.NewClient(apiKey)

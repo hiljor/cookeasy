@@ -2,5 +2,26 @@
   "HomePage": {
     "title": "Velkommen til Cookeasy",
     "description": "Del dine oppskrifter med verden"
+  },
+  "Auth": {
+    "login": {
+      "title": "Logg inn",
+      "email": "E-post",
+      "password": "Passord",
+      "submit": "Logg inn",
+      "noAccount": "Har du ikke en konto?",
+      "registerLink": "Registrer deg her",
+      "error": "Ugyldig e-post eller passord"
+    },
+    "register": {
+      "title": "Registrer deg",
+      "username": "Brukernavn",
+      "email": "E-post",
+      "password": "Passord",
+      "submit": "Opprett konto",
+      "haveAccount": "Har du allerede en konto?",
+      "loginLink": "Logg inn her",
+      "success": "Registrering fullført! Vennligst sjekk e-posten din for verifisering."
+    }
   }
 }

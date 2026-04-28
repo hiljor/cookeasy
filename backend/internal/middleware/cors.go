@@ -7,6 +7,7 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
+/* CORS provides a middleware handler for Cross-Origin Resource Sharing configuration */
 func CORS() gin.HandlerFunc {
 	return func(c *gin.Context) {
 		frontendURL := os.Getenv("FRONTEND_URL")

@@ -7,6 +7,7 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
+/* AuthRequired ensures the request has a valid access token cookie and injects the user ID into the context */
 func AuthRequired() gin.HandlerFunc {
 	return func(c *gin.Context) {
 		tokenString, err := c.Cookie("access_token")
@@ -23,7 +24,6 @@ func AuthRequired() gin.HandlerFunc {
 			return
 		}
 
-		// Set user ID in context for subsequent handlers
 		c.Set("user_id", claims.UserID)
 		c.Next()
 	}

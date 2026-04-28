@@ -7,12 +7,12 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
+/* SetupRouter configures the Gin engine with middleware and API routes */
 func SetupRouter() *gin.Engine {
 	r := gin.Default()
 
 	r.Use(middleware.CORS())
 
-	// Auth routes
 	auth := r.Group("/api/auth")
 	{
 		auth.POST("/register", handlers.Register)
@@ -22,7 +22,6 @@ func SetupRouter() *gin.Engine {
 		auth.POST("/forgot-password", handlers.ForgotPassword)
 		auth.POST("/reset-password", handlers.ResetPassword)
 
-		// Protected routes
 		protected := auth.Group("")
 		protected.Use(middleware.AuthRequired())
 		{

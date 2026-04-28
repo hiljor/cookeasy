@@ -10,12 +10,13 @@ import (
 	"gorm.io/gorm"
 )
 
+/* DB is the global database connection instance */
 var DB *gorm.DB
 
+/* Connect establishes a connection to the PostgreSQL database and runs auto-migrations */
 func Connect() {
 	dsn := os.Getenv("DATABASE_URL")
 	if dsn == "" {
-		// Fallback to local dev if no env var is set
 		dsn = "host=localhost user=user password=password dbname=cookeasy port=5432 sslmode=disable"
 	}
 
@@ -26,7 +27,6 @@ func Connect() {
 
 	fmt.Println("Database connection established")
 
-	// Run migrations
 	err = db.AutoMigrate(
 		&models.User{},
 		&models.RefreshToken{},

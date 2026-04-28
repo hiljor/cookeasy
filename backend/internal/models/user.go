@@ -7,6 +7,7 @@ import (
 	"gorm.io/gorm"
 )
 
+/* User represents a registered member of the platform */
 type User struct {
 	ID                uuid.UUID      `gorm:"type:uuid;primaryKey" json:"id"`
 	Username          string         `gorm:"uniqueIndex;not null" json:"username"`
@@ -24,6 +25,7 @@ type User struct {
 	Settings          UserSettings   `json:"settings"`
 }
 
+/* UserSettings stores personalization and notification preferences */
 type UserSettings struct {
 	ID                    uuid.UUID `gorm:"type:uuid;primaryKey" json:"id"`
 	UserID                uuid.UUID `gorm:"type:uuid;uniqueIndex;not null" json:"user_id"`
@@ -34,6 +36,7 @@ type UserSettings struct {
 	Theme                 string    `gorm:"default:'light'" json:"theme"`
 }
 
+/* BeforeCreate ensures a new User record has a UUID */
 func (u *User) BeforeCreate(tx *gorm.DB) (err error) {
 	if u.ID == uuid.Nil {
 		u.ID = uuid.New()
@@ -41,6 +44,7 @@ func (u *User) BeforeCreate(tx *gorm.DB) (err error) {
 	return
 }
 
+/* BeforeCreate ensures a new UserSettings record has a UUID */
 func (us *UserSettings) BeforeCreate(tx *gorm.DB) (err error) {
 	if us.ID == uuid.Nil {
 		us.ID = uuid.New()
