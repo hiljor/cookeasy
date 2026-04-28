@@ -4,6 +4,7 @@ import {notFound} from 'next/navigation';
 import {routing} from '@/i18n/routing';
 import { Geist, Geist_Mono } from "next/font/google";
 import type { Metadata } from "next";
+import { AuthProvider } from "@/context/AuthContext";
 import "../globals.css";
 
 const geistSans = Geist({
@@ -30,20 +31,19 @@ export default async function LocaleLayout({
 }) {
   const {locale} = await params;
 
-  // Ensure that the incoming `locale` is valid
   if (!routing.locales.includes(locale as any)) {
     notFound();
   }
  
-  // Providing all messages to the client
-  // side is the easiest way to get started
   const messages = await getMessages();
  
   return (
     <html lang={locale}>
       <body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
         <NextIntlClientProvider messages={messages}>
-          {children}
+          <AuthProvider>
+            {children}
+          </AuthProvider>
         </NextIntlClientProvider>
       </body>
     </html>

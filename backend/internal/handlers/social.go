@@ -128,3 +128,39 @@ func GetFriends(c *gin.Context) {
 
 	c.JSON(http.StatusOK, friends)
 }
+
+/* GetFriendRequests retrieves all pending friend requests for the current user */
+func GetFriendRequests(c *gin.Context) {
+	currentUserID := c.MustGet("user_id").(uuid.UUID)
+
+	var requests []models.FriendRequest
+	if err := database.DB.Preload("Sender").Where("receiver_id = ? AND status = ?", currentUserID, models.StatusPending).Find(&requests).Error; err != nil {
+		c.JSON(http.StatusInternalServerError, gin.H{"error": "Failed to fetch friend requests"})
+		return
+	}
+
+	c.JSON(http.StatusOK, requests)
+}
+
+/* RemoveFriend deletes an existing friendship between users */
+func RemoveFriend(c *gin.Context) {
+	currentUserID := c.MustGet("user_id").(uuid.UUID)
+	friendID, err := uuid.Parse(c.Param("id"))
+	if err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"error": "Invalid friend ID"})
+		return
+	}
+
+	// Friendship table uses (smaller_id, larger_id) logic
+	id1, id2 := currentUserID, friendID
+	if id1.String() > id2.String() {
+		id1, id2 = id2, id1
+	}
+
+	if err := database.DB.Where("user1_id = ? AND user2_id = ?", id1, id2).Delete(&models.Friendship{}).Error; err != nil {
+		c.JSON(http.StatusInternalServerError, gin.H{"error": "Failed to remove friend"})
+		return
+	}
+
+	c.JSON(http.StatusOK, gin.H{"message": "Friend removed successfully"})
+}

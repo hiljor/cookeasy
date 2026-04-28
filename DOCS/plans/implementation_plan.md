@@ -38,8 +38,8 @@ We will implement the project using a **vertically sliced approach** after the c
 - [x] **2.2 Registration Logic**: Signup with password hashing (bcrypt) and Resend email verification.
 - [x] **2.3 Login Logic**: JWT generation and secure cookie placement. Implement Refresh Token rotation.
 - [x] **2.4 Auth UI**: Implement Login and Register pages with client-side validation (Zod).
-- [ ] **2.5 Profile Management**: Backend endpoints and Frontend profile view/edit pages.
-- [ ] **2.6 Media Integration**: Cloudinary setup on backend and frontend upload component.
+- [x] **2.5 Profile Management**: Backend endpoints and Frontend profile view/edit pages.
+- [x] **2.6 Media Integration**: Supabase Storage setup on backend and frontend upload component.
 
 ### Phase 3: Social Graph (Friends & Groups)
 - [ ] **3.1 Friend System**: Backend logic for send/accept/reject and Frontend "Friends" dashboard.
@@ -71,7 +71,7 @@ We will implement the project using a **vertically sliced approach** after the c
 ### Phase 8: Deployment & Final Polish
 - [ ] **8.1 Swagger Docs**: Generate full OpenAPI documentation using `swag`.
 - [ ] **8.2 Testing**: Complete `vitest` suites for frontend and `testify` for backend.
-- [ ] **8.3 Deployment**: Set up Vercel (FE), Render (BE), and Neon (Prod DB).
+- [ ] **8.3 Deployment**: Set up Vercel (FE), Render (BE), and Supabase (Prod DB).
 
 ## Verification & Testing
 - **Unit Testing**: 100% coverage for business logic (Recipe scaling, Privacy checks).
@@ -81,3 +81,4 @@ We will implement the project using a **vertically sliced approach** after the c
 ## Migration & Rollback
 - **Database**: GORM Auto-Migrations for development. `golang-migrate` for production to ensure versioned rollbacks.
 - **Media**: Cloudinary asset versions will be used to prevent data loss during UI updates.
+

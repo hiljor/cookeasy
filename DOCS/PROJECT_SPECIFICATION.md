@@ -34,24 +34,24 @@ The project will be a monorepo containing both frontend and backend code organis
   - testify, go-sqlmock
   - go-playground/validator (matching Zod logic)
   - swaggo/swag (for Swagger/OpenAPI)
-- Database: PostgreSQL (via Neon)
+- Database: PostgreSQL (via Supabase)
 - Authentication: Custom JWT + Refresh Tokens (Cookie-based).
 - API Strategy: Next.js Rewrites (Proxying) to handle same-origin cookie transmission between Vercel and Render.
 - Hosting: 
   - Vercel for frontend ($0)
   - Render for backend ($0, free tier)
-  - Neon for PostgreSQL database ($0)
+  - Supabase for PostgreSQL database and Media Storage ($0)
 - CI/CD: GitHub Actions
 - docker for containerization of the backend and database for development and testing
 - indexing and recipe search: PostgreSQL Full Text Search (OR logic with relevance ranking).
-- saving images: Cloudinary (Free tier).
+- saving images: Supabase Storage (Free tier).
   - **Constraints**: Max 5MB per upload, automatic conversion to WebP, automatic resizing for mobile performance.
 - email service: Resend (Free tier) for account confirmation and password resets.
 
 ## Environment Variables (Required)
-- `DATABASE_URL` (Neon Postgres)
-- `JWT_SECRET` & `REFRESH_SECRET`
-- `CLOUDINARY_URL`
+- `DATABASE_URL` (Supabase Postgres)
+- `SUPABASE_URL` & `SUPABASE_SERVICE_ROLE_KEY` (for image uploads)
+- `JWT_SECRET`
 - `RESEND_API_KEY`
 - `FRONTEND_URL` & `BACKEND_URL`
 

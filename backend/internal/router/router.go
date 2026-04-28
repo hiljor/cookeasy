@@ -26,8 +26,21 @@ func SetupRouter() *gin.Engine {
 		protected.Use(middleware.AuthRequired())
 		{
 			protected.GET("/me", handlers.GetMe)
+			protected.PUT("/me", handlers.UpdateMe)
+			protected.PUT("/me/avatar", handlers.UpdateProfilePicture)
 			protected.POST("/logout", handlers.Logout)
 		}
+	}
+
+	// Social routes
+	social := r.Group("/api/social")
+	social.Use(middleware.AuthRequired())
+	{
+		social.POST("/friends/request", handlers.SendFriendRequest)
+		social.GET("/friends/requests", handlers.GetFriendRequests)
+		social.POST("/friends/respond", handlers.RespondFriendRequest)
+		social.GET("/friends", handlers.GetFriends)
+		social.DELETE("/friends/:id", handlers.RemoveFriend)
 	}
 
 	return r
