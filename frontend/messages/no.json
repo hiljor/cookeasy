@@ -1,7 +1,19 @@
 {
   "HomePage": {
     "title": "Velkommen til Cookeasy",
-    "description": "Del dine oppskrifter med verden"
+    "description": "Del oppskriftene dine med verden",
+    "dailyRecipe": "Dagens oppskrift",
+    "searchPlaceholder": "Søk etter oppskrifter, ingredienser...",
+    "getStarted": "Kom i gang",
+    "login": "Logg inn"
+  },
+  "Common": {
+    "appName": "Cookeasy",
+    "nav": {
+      "recipes": "Oppskrifter",
+      "friends": "Venner",
+      "profile": "Profil"
+    }
   },
   "Auth": {
     "login": {
@@ -9,7 +21,7 @@
       "email": "E-post",
       "password": "Passord",
       "submit": "Logg inn",
-      "noAccount": "Har du ikke en konto?",
+      "noAccount": "Har du ikke konto?",
       "registerLink": "Registrer deg her",
       "error": "Ugyldig e-post eller passord"
     },
@@ -21,7 +33,7 @@
       "submit": "Opprett konto",
       "haveAccount": "Har du allerede en konto?",
       "loginLink": "Logg inn her",
-      "success": "Registrering fullført! Vennligst sjekk e-posten din for verifisering."
+      "success": "Registreringen var vellykket! Vennligst sjekk e-posten din for bekreftelse."
     }
   }
 }

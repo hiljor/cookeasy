@@ -1,7 +1,19 @@
 {
   "HomePage": {
     "title": "Welcome to Cookeasy",
-    "description": "Share your recipes with the world"
+    "description": "Share your recipes with the world",
+    "dailyRecipe": "Daily Recipe",
+    "searchPlaceholder": "Search for recipes, ingredients...",
+    "getStarted": "Get Started",
+    "login": "Log In"
+  },
+  "Common": {
+    "appName": "Cookeasy",
+    "nav": {
+      "recipes": "Recipes",
+      "friends": "Friends",
+      "profile": "Profile"
+    }
   },
   "Auth": {
     "login": {
