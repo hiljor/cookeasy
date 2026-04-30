@@ -40,11 +40,17 @@ We will implement the project using a **vertically sliced approach** after the c
 - [x] **2.4 Auth UI**: Implement Login and Register pages with client-side validation (Zod).
 - [x] **2.5 Profile Management**: Backend endpoints and Frontend profile view/edit pages.
 - [x] **2.6 Media Integration**: Supabase Storage setup on backend and frontend upload component.
+- [ ] **2.7 UI/UX Polishing (Current Focus)**:
+    - [ ] **Landing Page**: Add "Get Started" (Register) and "Login" call-to-action buttons.
+    - [ ] **Navigation**: Implement a mobile-first Navbar with active state indicators and locale switcher.
+    - [ ] **Auth Flow Polish**: Add loading states to buttons and toast notifications for success/error.
+    - [ ] **Empty States**: Design "No Friends Yet" or "No Recipes Found" placeholder illustrations.
 
 ### Phase 3: Social Graph (Friends & Groups)
 - [ ] **3.1 Friend System**: Backend logic for send/accept/reject and Frontend "Friends" dashboard.
 - [ ] **3.2 Group System**: Backend `Group` models and Frontend "Groups" management UI.
 - [ ] **3.3 Invite System**: Backend logic and Frontend notification/invite components.
+- [ ] **3.4 Social Polish**: Implement real-time request counters and smooth slide-in animations for lists.
 
 ### Phase 4: Recipe System (The Core)
 - [ ] **4.1 Recipe Models**: Implement `Recipe`, `Ingredient`, and `Tag` models.
@@ -52,6 +58,7 @@ We will implement the project using a **vertically sliced approach** after the c
 - [ ] **4.3 Media**: Cloudinary integration for recipe images with 5MB/WebP constraints.
 - [ ] **4.4 Scaling Logic**: Frontend utility and UI to dynamically recalculate ingredient amounts.
 - [ ] **4.5 Recipe View**: Detailed recipe page with scaling and printing support.
+- [ ] **4.6 Recipe Polish**: Skeleton loaders for images and interactive "Cook Mode" (stay-awake screen logic).
 
 ### Phase 5: Cookbooks & Collaboration
 - [ ] **5.1 Cookbook Models**: Implementation of `Cookbook` and join models.
