@@ -33,15 +33,27 @@ func SendFriendRequest(c *gin.Context) {
 		c.JSON(http.StatusBadRequest, gin.H{"error": "You cannot friend yourself"})
 		return
 	}
+// Check if request already exists
+var existing models.FriendRequest
+if err := database.DB.Where("(sender_id = ? AND receiver_id = ?) OR (sender_id = ? AND receiver_id = ?)", 
+	currentUserID, req.ReceiverID, req.ReceiverID, currentUserID).First(&existing).Error; err == nil {
+	c.JSON(http.StatusConflict, gin.H{"error": "A friend request already exists between these users"})
+	return
+}
 
-	var existing models.FriendRequest
-	if err := database.DB.Where("(sender_id = ? AND receiver_id = ?) OR (sender_id = ? AND receiver_id = ?)", 
-		currentUserID, req.ReceiverID, req.ReceiverID, currentUserID).First(&existing).Error; err == nil {
-		c.JSON(http.StatusConflict, gin.H{"error": "A friend request already exists between these users"})
-		return
-	}
+// Check if already friends
+id1, id2 := currentUserID, req.ReceiverID
+if id1.String() > id2.String() {
+	id1, id2 = id2, id1
+}
+var friendship models.Friendship
+if err := database.DB.Where("user1_id = ? AND user2_id = ?", id1, id2).First(&friendship).Error; err == nil {
+	c.JSON(http.StatusConflict, gin.H{"error": "You are already friends with this user"})
+	return
+}
 
-	friendReq := models.FriendRequest{
+friendReq := models.FriendRequest{
+
 		SenderID:   currentUserID,
 		ReceiverID: req.ReceiverID,
 		Status:     models.StatusPending,

@@ -1,6 +1,7 @@
 "use client";
 
 import React, { createContext, useContext, useEffect, useState } from "react";
+import { useRouter } from "next/navigation";
 
 interface User {
   id: string;
@@ -66,4 +67,17 @@ export function useAuth() {
     throw new Error("useAuth must be used within an AuthProvider");
   }
   return context;
+}
+
+export function useProtectedRoute() {
+  const { user, isLoading } = useAuth();
+  const router = useRouter();
+
+  useEffect(() => {
+    if (!isLoading && !user) {
+      router.push("/login");
+    }
+  }, [user, isLoading, router]);
+
+  return { user, isLoading };
 }

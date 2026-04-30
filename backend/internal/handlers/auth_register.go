@@ -6,6 +6,7 @@ import (
 	"cookeasy/backend/internal/utils"
 	"log"
 	"net/http"
+	"regexp"
 
 	"github.com/gin-gonic/gin"
 	"github.com/google/uuid"
@@ -23,6 +24,12 @@ func Register(c *gin.Context) {
 	var req RegisterRequest
 	if err := c.ShouldBindJSON(&req); err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+		return
+	}
+
+	// Validate password complexity (at least one number and one special character)
+	if !validatePassword(req.Password) {
+		c.JSON(http.StatusBadRequest, gin.H{"error": "Password must contain at least one number and one special character"})
 		return
 	}
 
@@ -91,4 +98,10 @@ func VerifyEmail(c *gin.Context) {
 	database.DB.Save(&user)
 
 	c.JSON(http.StatusOK, gin.H{"message": "Email verified successfully"})
+}
+
+func validatePassword(password string) bool {
+	hasNumber := regexp.MustCompile(`[0-9]`).MatchString(password)
+	hasSpecial := regexp.MustCompile(`[!@#\$%\^&\*\(\)_\+\-=\[\]\{\};':"\\|,.<>\/\?]`).MatchString(password)
+	return hasNumber && hasSpecial
 }

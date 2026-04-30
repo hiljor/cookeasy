@@ -3,9 +3,9 @@ package tests
 import (
 	"bytes"
 	"cookeasy/backend/internal/database"
-	"cookeasy/backend/internal/handlers"
 	"cookeasy/backend/internal/models"
 	"cookeasy/backend/internal/router"
+	"cookeasy/backend/internal/utils"
 	"encoding/json"
 	"net/http"
 	"net/http/httptest"
@@ -13,16 +13,29 @@ import (
 	"testing"
 
 	"github.com/gin-gonic/gin"
+	"github.com/glebarez/sqlite"
 	"github.com/stretchr/testify/assert"
-	"gorm.io/driver/sqlite"
 	"gorm.io/gorm"
 )
 
 func setupTestRouter() *gin.Engine {
 	gin.SetMode(gin.TestMode)
 	// Use in-memory SQLite for tests
-	db, _ := gorm.Open(sqlite.Open(":memory:"), &gorm.Config{})
-	db.AutoMigrate(&models.User{}, &models.RefreshToken{}, &models.UserSettings{})
+	db, err := gorm.Open(sqlite.Open(":memory:"), &gorm.Config{})
+	if err != nil {
+		panic("failed to connect database: " + err.Error())
+	}
+
+	db.AutoMigrate(
+		&models.User{},
+		&models.RefreshToken{},
+		&models.UserSettings{},
+		&models.FriendRequest{},
+		&models.Friendship{},
+		&models.Group{},
+		&models.GroupMembership{},
+		&models.GroupInvite{},
+	)
 	database.DB = db
 
 	return router.SetupRouter()
@@ -35,7 +48,7 @@ func TestRegister_Success(t *testing.T) {
 	payload := map[string]string{
 		"username": "newuser",
 		"email":    "new@example.com",
-		"password": "password123",
+		"password": "password123!",
 	}
 	body, _ := json.Marshal(payload)
 
@@ -47,6 +60,24 @@ func TestRegister_Success(t *testing.T) {
 	assert.Equal(t, http.StatusCreated, w.Code)
 }
 
+func TestRegister_WeakPassword(t *testing.T) {
+	r := setupTestRouter()
+
+	payload := map[string]string{
+		"username": "weakuser",
+		"email":    "weak@example.com",
+		"password": "password123", // Missing special character
+	}
+	body, _ := json.Marshal(payload)
+
+	req, _ := http.NewRequest("POST", "/api/auth/register", bytes.NewBuffer(body))
+	req.Header.Set("Content-Type", "application/json")
+	w := httptest.NewRecorder()
+	r.ServeHTTP(w, req)
+
+	assert.Equal(t, http.StatusBadRequest, w.Code)
+}
+
 func TestRegister_Conflict(t *testing.T) {
 	r := setupTestRouter()
 	
@@ -56,7 +87,7 @@ func TestRegister_Conflict(t *testing.T) {
 	payload := map[string]string{
 		"username": "existing",
 		"email":    "new@ex.com",
-		"password": "password123",
+		"password": "password123!",
 	}
 	body, _ := json.Marshal(payload)
 
@@ -71,7 +102,7 @@ func TestRegister_Conflict(t *testing.T) {
 func TestLogin_Success(t *testing.T) {
 	r := setupTestRouter()
 	
-	hashedPassword, _ := models.HashPassword("password123")
+	hashedPassword, _ := utils.HashPassword("password123!")
 	user := models.User{
 		Username:   "loginuser",
 		Email:      "login@ex.com",
@@ -82,7 +113,7 @@ func TestLogin_Success(t *testing.T) {
 
 	payload := map[string]string{
 		"email":    "login@ex.com",
-		"password": "password123",
+		"password": "password123!",
 	}
 	body, _ := json.Marshal(payload)
 

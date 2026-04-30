@@ -3,7 +3,10 @@ package handlers
 import (
 	"cookeasy/backend/internal/database"
 	"cookeasy/backend/internal/models"
+	"cookeasy/backend/internal/utils"
+	"fmt"
 	"net/http"
+	"strings"
 
 	"github.com/gin-gonic/gin"
 )
@@ -88,9 +91,22 @@ func UpdateProfilePicture(c *gin.Context) {
 		return
 	}
 
-	// Upload to Supabase
-	filePath := fmt.Sprintf("avatars/%s-%s", userID, header.Filename)
-	publicURL, err := utils.UploadToSupabase("media", filePath, file, header.Header.Get("Content-Type"))
+	// Validate content type
+	contentType := header.Header.Get("Content-Type")
+	allowedTypes := map[string]bool{
+		"image/jpeg": true,
+		"image/jpg":  true,
+		"image/png":  true,
+		"image/webp": true,
+	}
+	if !allowedTypes[strings.ToLower(contentType)] {
+		c.JSON(http.StatusBadRequest, gin.H{"error": "Invalid file type. Only JPG, PNG and WebP are allowed."})
+		return
+	}
+
+	// Upload to Cloudinary
+	publicID := fmt.Sprintf("%s-%d", userID, header.Size) // Simple unique ID
+	publicURL, err := utils.UploadToCloudinary(file, publicID, "cookeasy/avatars")
 	if err != nil {
 		c.JSON(http.StatusInternalServerError, gin.H{"error": "Failed to upload image"})
 		return
