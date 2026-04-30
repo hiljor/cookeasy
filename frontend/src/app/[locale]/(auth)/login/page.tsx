@@ -6,6 +6,7 @@ import { useRouter } from "next/navigation";
 import { Button } from "@/components/ui/Button";
 import { Input } from "@/components/ui/Input";
 import Link from "next/link";
+import { toast } from "sonner";
 
 export default function LoginPage() {
   const t = useTranslations("Auth.login");
@@ -13,12 +14,10 @@ export default function LoginPage() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [isLoading, setIsLoading] = useState(false);
-  const [error, setError] = useState("");
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsLoading(true);
-    setError("");
 
     try {
       const response = await fetch("/api/auth/login", {
@@ -32,10 +31,11 @@ export default function LoginPage() {
         throw new Error(data.error || t("error"));
       }
 
+      toast.success(t("success") || "Successfully logged in!");
       router.push("/dashboard");
       router.refresh();
     } catch (err: any) {
-      setError(err.message);
+      toast.error(err.message);
     } finally {
       setIsLoading(false);
     }
@@ -43,8 +43,8 @@ export default function LoginPage() {
 
   return (
     <div className="flex flex-col items-center justify-center min-h-[calc(100vh-4rem)] p-4">
-      <div className="w-full max-w-md bg-white rounded-xl shadow-lg p-8 border border-gray-100">
-        <h1 className="text-2xl font-bold text-center mb-8 text-gray-900">{t("title")}</h1>
+      <div className="w-full max-w-md bg-white rounded-xl shadow-lg p-8 border border-gray-100 dark:bg-zinc-900 dark:border-zinc-800">
+        <h1 className="text-2xl font-bold text-center mb-8 text-gray-900 dark:text-white">{t("title")}</h1>
         
         <form onSubmit={handleSubmit} className="space-y-6">
           <Input
@@ -65,14 +65,12 @@ export default function LoginPage() {
             placeholder="********"
           />
 
-          {error && <p className="text-sm text-red-500 text-center">{error}</p>}
-
           <Button type="submit" className="w-full" isLoading={isLoading}>
             {t("submit")}
           </Button>
         </form>
 
-        <div className="mt-8 text-center text-sm text-gray-600">
+        <div className="mt-8 text-center text-sm text-gray-600 dark:text-zinc-400">
           {t("noAccount")}{" "}
           <Link href="/register" className="text-orange-500 font-semibold hover:underline">
             {t("registerLink")}

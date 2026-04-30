@@ -21,6 +21,7 @@
       "email": "Email",
       "password": "Password",
       "submit": "Sign In",
+      "success": "Welcome back! You have successfully logged in.",
       "noAccount": "Don't have an account?",
       "registerLink": "Register here",
       "error": "Invalid email or password"
@@ -34,6 +35,28 @@
       "haveAccount": "Already have an account?",
       "loginLink": "Login here",
       "success": "Registration successful! Please check your email for verification."
+    }
+  },
+  "Social": {
+    "friends": {
+      "title": "Community",
+      "findUsers": "Find Users",
+      "tabs": {
+        "all": "My Friends",
+        "requests": "Pending Requests"
+      },
+      "loading": "Loading your circle...",
+      "empty": {
+        "friends": "You haven't added any friends yet.",
+        "requests": "No pending requests."
+      },
+      "actions": {
+        "removeConfirm": "Are you sure you want to remove this friend?",
+        "wantsToBeFriend": "Wants to be your friend",
+        "accept": "Accept",
+        "reject": "Reject",
+        "remove": "Remove friend"
+      }
     }
   }
 }

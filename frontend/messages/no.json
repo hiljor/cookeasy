@@ -21,6 +21,7 @@
       "email": "E-post",
       "password": "Passord",
       "submit": "Logg inn",
+      "success": "Velkommen tilbake! Du er nå logget inn.",
       "noAccount": "Har du ikke konto?",
       "registerLink": "Registrer deg her",
       "error": "Ugyldig e-post eller passord"
@@ -34,6 +35,28 @@
       "haveAccount": "Har du allerede en konto?",
       "loginLink": "Logg inn her",
       "success": "Registreringen var vellykket! Vennligst sjekk e-posten din for bekreftelse."
+    }
+  },
+  "Social": {
+    "friends": {
+      "title": "Samfunn",
+      "findUsers": "Finn brukere",
+      "tabs": {
+        "all": "Mine venner",
+        "requests": "Venter på svar"
+      },
+      "loading": "Laster inn kretsen din...",
+      "empty": {
+        "friends": "Du har ikke lagt til noen venner ennå.",
+        "requests": "Ingen ventende forespørsler."
+      },
+      "actions": {
+        "removeConfirm": "Er du sikker på at du vil fjerne denne vennen?",
+        "wantsToBeFriend": "Ønsker å bli vennen din",
+        "accept": "Godta",
+        "reject": "Avvis",
+        "remove": "Fjern venn"
+      }
     }
   }
 }
