@@ -47,8 +47,14 @@
       },
       "loading": "Laster inn kretsen din...",
       "empty": {
-        "friends": "Du har ikke lagt til noen venner ennå.",
-        "requests": "Ingen ventende forespørsler."
+        "friends": {
+          "title": "Ingen venner ennå",
+          "description": "Begynn å bygge din kokkekrets for å dele og oppdage oppskrifter sammen."
+        },
+        "requests": {
+          "title": "Ingen forespørsler",
+          "description": "Du har ingen ventende venneforespørsler for øyeblikket."
+        }
       },
       "actions": {
         "removeConfirm": "Er du sikker på at du vil fjerne denne vennen?",
@@ -56,6 +62,18 @@
         "accept": "Godta",
         "reject": "Avvis",
         "remove": "Fjern venn"
+      }
+    },
+    "profile": {
+      "empty": {
+        "recipes": {
+          "title": "Ingen oppskrifter ennå",
+          "description": "Denne kokken har ikke delt noen kulinariske hemmeligheter ennå. Følg med!"
+        },
+        "ownRecipes": {
+          "title": "Kjøkkenet ditt er stille",
+          "description": "Del din første oppskrift og begynn å inspirere andre med matlagingen din!"
+        }
       }
     }
   }

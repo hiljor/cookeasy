@@ -1,26 +1,59 @@
 @import "tailwindcss";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
-
 @theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
+  --color-background: var(--color-background);
+  --color-foreground: var(--color-foreground);
+  --color-card: var(--color-card);
+  --color-primary: var(--color-primary);
+  --color-primary-foreground: var(--color-primary-foreground);
+  --color-border: var(--color-border);
+  --color-muted: var(--color-muted);
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+:root, [data-theme='default'] {
+  --color-background: #ffffff;
+  --color-foreground: #171717;
+  --color-card: #f9f9f9;
+  --color-primary: #f97316; /* orange-500 */
+  --color-primary-foreground: #ffffff;
+  --color-border: #e5e5e5;
+  --color-muted: #737373;
+}
+
+[data-theme='midnight'] {
+  --color-background: #0f172a; /* slate-900 */
+  --color-foreground: #f8fafc; /* slate-50 */
+  --color-card: #1e293b; /* slate-800 */
+  --color-primary: #818cf8; /* indigo-400 */
+  --color-primary-foreground: #0f172a;
+  --color-border: #334155; /* slate-700 */
+  --color-muted: #94a3b8; /* slate-400 */
+}
+
+[data-theme='earthy'] {
+  --color-background: #fdfaf6; /* warm beige */
+  --color-foreground: #3f2e26;
+  --color-card: #f5efe8;
+  --color-primary: #4d7c0f; /* lime-700 */
+  --color-primary-foreground: #ffffff;
+  --color-border: #d6ccbe;
+  --color-muted: #857463;
+}
+
+[data-theme='ocean'] {
+  --color-background: #f0fdfa; /* teal-50 */
+  --color-foreground: #134e4a; /* teal-900 */
+  --color-card: #ccfbf1;
+  --color-primary: #0d9488; /* teal-600 */
+  --color-primary-foreground: #ffffff;
+  --color-border: #99f6e4;
+  --color-muted: #0f766e;
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
+  background: var(--color-background);
+  color: var(--color-foreground);
   font-family: Arial, Helvetica, sans-serif;
 }

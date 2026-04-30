@@ -5,6 +5,9 @@ import { useParams } from "next/navigation";
 import { useAuth } from "@/context/AuthContext";
 import { Button } from "@/components/ui/Button";
 import Link from "next/link";
+import { ChefHat } from "lucide-react";
+import { useTranslations } from "next-intl";
+import { EmptyState } from "@/components/ui/EmptyState";
 
 interface UserProfile {
   id: string;
@@ -20,6 +23,7 @@ export default function ProfilePage() {
   const [profile, setProfile] = useState<UserProfile | null>(null);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState("");
+  const t = useTranslations("Social.profile");
 
   useEffect(() => {
     const fetchProfile = async () => {
@@ -45,8 +49,8 @@ export default function ProfilePage() {
 
   return (
     <div className="max-w-2xl mx-auto p-4 sm:p-8">
-      <div className="flex flex-col items-center sm:flex-row sm:items-start gap-6">
-        <div className="w-32 h-32 rounded-full bg-gray-200 overflow-hidden flex-shrink-0">
+      <div className="flex flex-col items-center sm:flex-row sm:items-start gap-6 mb-12">
+        <div className="w-32 h-32 rounded-full bg-gray-200 overflow-hidden flex-shrink-0 dark:bg-zinc-800">
           {profile.profile_picture_url ? (
             <img src={profile.profile_picture_url} alt={profile.username} className="w-full h-full object-cover" />
           ) : (
@@ -58,27 +62,40 @@ export default function ProfilePage() {
 
         <div className="flex-1 text-center sm:text-left">
           <div className="flex flex-col sm:flex-row sm:items-center gap-4 mb-4">
-            <h1 className="text-2xl font-bold">@{profile.username}</h1>
+            <h1 className="text-2xl font-bold dark:text-white">@{profile.username}</h1>
             {isOwnProfile && (
               <Link href="/settings/profile">
-                <Button variant="outline" size="sm">Edit Profile</Button>
+                <Button variant="outline" size="sm" className="dark:bg-zinc-900 dark:border-zinc-800">Edit Profile</Button>
               </Link>
             )}
           </div>
           
-          <p className="text-gray-600 mb-6">{profile.bio || "No bio yet."}</p>
+          <p className="text-gray-600 dark:text-zinc-400 mb-6">{profile.bio || "No bio yet."}</p>
           
-          <div className="flex justify-center sm:justify-start gap-8 border-t border-b py-4">
+          <div className="flex justify-center sm:justify-start gap-8 border-t border-b py-4 dark:border-zinc-800">
             <div className="text-center">
-              <span className="block font-bold">0</span>
-              <span className="text-sm text-gray-500">Recipes</span>
+              <span className="block font-bold dark:text-white">0</span>
+              <span className="text-sm text-gray-500 dark:text-zinc-400">Recipes</span>
             </div>
             <div className="text-center">
-              <span className="block font-bold">0</span>
-              <span className="text-sm text-gray-500">Friends</span>
+              <span className="block font-bold dark:text-white">0</span>
+              <span className="text-sm text-gray-500 dark:text-zinc-400">Friends</span>
             </div>
           </div>
         </div>
+      </div>
+
+      <div className="space-y-6">
+        <h2 className="text-xl font-bold dark:text-white">Recipes</h2>
+        <EmptyState 
+          icon={ChefHat}
+          title={isOwnProfile ? t("empty.ownRecipes.title") : t("empty.recipes.title")}
+          description={isOwnProfile ? t("empty.ownRecipes.description") : t("empty.recipes.description")}
+          action={isOwnProfile ? {
+            label: "Create First Recipe",
+            onClick: () => console.log("Create recipe clicked")
+          } : undefined}
+        />
       </div>
     </div>
   );

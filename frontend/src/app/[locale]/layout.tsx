@@ -5,6 +5,7 @@ import {routing} from '@/i18n/routing';
 import { Geist, Geist_Mono } from "next/font/google";
 import type { Metadata } from "next";
 import { AuthProvider } from "@/context/AuthContext";
+import { ThemeProvider } from "@/context/ThemeContext";
 import { Toaster } from "sonner";
 import "../globals.css";
 
@@ -43,8 +44,10 @@ export default async function LocaleLayout({
       <body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
         <NextIntlClientProvider messages={messages}>
           <AuthProvider>
-            <Toaster position="top-center" richColors />
-            {children}
+            <ThemeProvider>
+              <Toaster position="top-center" richColors />
+              {children}
+            </ThemeProvider>
           </AuthProvider>
         </NextIntlClientProvider>
       </body>

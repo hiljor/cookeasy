@@ -7,8 +7,13 @@
     "dev:frontend": "pnpm --filter frontend dev",
     "dev:backend": "cd backend && go run cmd/api/main.go",
     "dev": "concurrently \"pnpm dev:frontend\" \"pnpm dev:backend\"",
+    "build:frontend": "pnpm --filter frontend build",
+    "build:backend": "cd backend && go build -o bin/api cmd/api/main.go",
+    "build": "pnpm build:frontend && pnpm build:backend",
     "db:up": "docker-compose up -d",
-    "db:down": "docker-compose down"
+    "db:down": "docker-compose down",
+    "test:frontend": "pnpm --filter frontend test",
+    "test:backend": "cd backend && go test ./internal/handlers/tests/..."
   },
   "keywords": [],
   "author": "",

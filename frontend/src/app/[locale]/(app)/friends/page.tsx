@@ -2,6 +2,13 @@
 
 import { useTranslations } from "next-intl";
 import { toast } from "sonner";
+import { useState, useEffect } from "react";
+import { Search, UserMinus, Check, X, Users, Inbox } from "lucide-react";
+import { Button } from "@/components/ui/Button";
+import { Card, CardContent } from "@/components/ui/Card";
+import { Avatar } from "@/components/ui/Avatar";
+import { Badge } from "@/components/ui/Badge";
+import { EmptyState } from "@/components/ui/EmptyState";
 
 interface Friend {
   id: string;
@@ -116,8 +123,16 @@ export default function FriendsPage() {
           {activeTab === "all" && (
             <div className="grid gap-4 sm:grid-cols-2">
               {friends.length === 0 ? (
-                <div className="sm:col-span-2 text-center py-12 bg-zinc-50 dark:bg-zinc-900/50 rounded-xl border border-dashed border-zinc-200 dark:border-zinc-800">
-                  <p className="text-zinc-500 dark:text-zinc-400">{t("empty.friends")}</p>
+                <div className="sm:col-span-2">
+                  <EmptyState 
+                    icon={Users}
+                    title={t("empty.friends.title")}
+                    description={t("empty.friends.description")}
+                    action={{
+                      label: t("findUsers"),
+                      onClick: () => console.log("Find users clicked")
+                    }}
+                  />
                 </div>
               ) : (
                 friends.map((friend) => (
@@ -141,9 +156,11 @@ export default function FriendsPage() {
           {activeTab === "requests" && (
             <div className="grid gap-4">
               {requests.length === 0 ? (
-                <div className="text-center py-12 bg-zinc-50 dark:bg-zinc-900/50 rounded-xl border border-dashed border-zinc-200 dark:border-zinc-800">
-                  <p className="text-zinc-500 dark:text-zinc-400">{t("empty.requests")}</p>
-                </div>
+                <EmptyState 
+                  icon={Inbox}
+                  title={t("empty.requests.title")}
+                  description={t("empty.requests.description")}
+                />
               ) : (
                 requests.map((req) => (
                   <Card key={req.id} className="dark:bg-zinc-900 dark:border-zinc-800">
@@ -172,3 +189,4 @@ export default function FriendsPage() {
     </div>
   );
 }
+

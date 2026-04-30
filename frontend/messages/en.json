@@ -47,8 +47,14 @@
       },
       "loading": "Loading your circle...",
       "empty": {
-        "friends": "You haven't added any friends yet.",
-        "requests": "No pending requests."
+        "friends": {
+          "title": "No friends yet",
+          "description": "Start building your cooking circle to share and discover recipes together."
+        },
+        "requests": {
+          "title": "Clear for now",
+          "description": "You don't have any pending friend requests at the moment."
+        }
       },
       "actions": {
         "removeConfirm": "Are you sure you want to remove this friend?",
@@ -56,6 +62,18 @@
         "accept": "Accept",
         "reject": "Reject",
         "remove": "Remove friend"
+      }
+    },
+    "profile": {
+      "empty": {
+        "recipes": {
+          "title": "No recipes yet",
+          "description": "This chef hasn't shared any culinary secrets yet. Stay tuned!"
+        },
+        "ownRecipes": {
+          "title": "Your kitchen is quiet",
+          "description": "Share your first recipe and start inspiring others with your cooking!"
+        }
       }
     }
   }

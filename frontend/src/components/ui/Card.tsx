@@ -7,14 +7,14 @@ interface CardProps {
 
 export function Card({ children, className }: CardProps) {
   return (
-    <div className={`bg-white rounded-xl shadow-sm border border-gray-100 overflow-hidden ${className || ""}`}>
+    <div className={`bg-[var(--color-card)] rounded-xl shadow-sm border border-[var(--color-border)] overflow-hidden ${className || ""}`}>
       {children}
     </div>
   );
 }
 
 export function CardHeader({ children, className }: CardProps) {
-  return <div className={`p-4 border-b border-gray-50 ${className || ""}`}>{children}</div>;
+  return <div className={`p-4 border-b border-[var(--color-border)] ${className || ""}`}>{children}</div>;
 }
 
 export function CardContent({ children, className }: CardProps) {
@@ -22,5 +22,5 @@ export function CardContent({ children, className }: CardProps) {
 }
 
 export function CardFooter({ children, className }: CardProps) {
-  return <div className={`p-4 border-t border-gray-50 bg-gray-50/30 ${className || ""}`}>{children}</div>;
+  return <div className={`p-4 border-t border-[var(--color-border)] bg-[var(--color-muted)]/10 ${className || ""}`}>{children}</div>;
 }
