@@ -32,7 +32,7 @@ We will implement the project using a **vertically sliced approach** after the c
 - [x] **1.3 Backend Boilerplate**: Set up Gin with middleware (Logger, Recovery) and GORM connection.
 - [x] **1.4 Frontend Boilerplate**: Initialize Next.js with Tailwind CSS v4, TypeScript 6, and `next-intl` (i18n).
 - [x] **1.5 API Proxy**: Configure `next.config.js` rewrites to map `/api/*` to the Go backend.
-- [ ] **1.6 Infrastructure Testing**: Write relevant tests for API proxy and core middleware.
+- [x] **1.6 Infrastructure Testing**: Write relevant tests for API proxy and core middleware.
 
 ### Phase 2: Authentication & User Management
 - [x] **2.1 Database Schema**: Implement `User` and `RefreshToken` models.
@@ -46,19 +46,33 @@ We will implement the project using a **vertically sliced approach** after the c
     - [x] **Navigation**: Implement a mobile-first Navbar with active state indicators and locale switcher.
     - [x] **Auth Flow Polish**: Add loading states to buttons and toast notifications for success/error.
     - [x] **Empty States**: Design "No Friends Yet" or "No Recipes Found" placeholder illustrations.
-- [ ] **2.8 Multi-Theme System**: See detailed subplan in `DOCS/plans/multi_theme_subplan.md`.
-    - [ ] **Theme Foundation**: Define a set of base CSS variables for colors (primary, background, surface, text) in `globals.css`.
-    - [ ] **Custom Theme Definitions**: Implement multiple theme palettes (e.g., "Default", "Midnight", "Earthy") using data-attributes.
-    - [ ] **Theme Provider**: Set up a context provider to manage the active theme state.
-    - [ ] **Theme Selector**: Add a UI component in Settings to switch between the pre-defined themes.
-- [ ] **2.9 Auth & User Testing**: Write relevant tests for registration, login, profile management, and theme switching.
+- [x] **2.8 Multi-Theme System**: See detailed subplan in `DOCS/plans/multi_theme_subplan.md`.
+    - [x] **Theme Foundation**: Define a set of base CSS variables for colors (primary, background, surface, text) in `globals.css`.
+    - [x] **Custom Theme Definitions**: Implement multiple theme palettes (e.g., "Default", "Midnight", "Earthy") using data-attributes.
+    - [x] **Theme Provider**: Set up a context provider to manage the active theme state.
+    - [x] **Theme Selector**: Add a UI component in Settings to switch between the pre-defined themes.
+- [x] **2.9 Auth & User Testing**: Write relevant tests for registration, login, profile management, and theme switching.
 
 ### Phase 3: Social Graph (Friends & Groups)
-- [ ] **3.1 Friend System**: Backend logic for send/accept/reject and Frontend "Friends" dashboard.
-- [ ] **3.2 Group System**: Backend `Group` models and Frontend "Groups" management UI.
-- [ ] **3.3 Invite System**: Backend logic and Frontend notification/invite components.
-- [ ] **3.4 Social Polish**: Implement real-time request counters and smooth slide-in animations for lists.
-- [ ] **3.5 Social Testing**: Write relevant tests for friend requests, group management, and notifications.
+- [ ] **3.1 Friend System Completion**:
+    - [x] **3.1.1 User Search API**: Implement `GET /api/users/search?q=...` to find users by username.
+    - [x] **3.1.2 User Search UI**: Implement a "Find Users" search component in the Friends dashboard.
+    - [ ] **3.1.3 Profile Integration**: Add Friend/Remove Friend action buttons to public profile pages (`/u/[username]`).
+- [ ] **3.2 Group Management**:
+    - [ ] **3.2.1 Backend API**: Implement CRUD for Groups (`POST /api/social/groups`, `GET`, `DELETE`).
+    - [ ] **3.2.2 Frontend UI**: Create a "Groups" dashboard and a "Create Group" multi-step dialog.
+    - [ ] **3.2.3 Member List**: Implementation of the group member view and member removal logic.
+- [ ] **3.3 Group Invite System**:
+    - [ ] **3.3.1 Invite API**: Endpoints for sending invites (`/invite`), listing pending invites, and responding to them.
+    - [ ] **3.3.2 Invite UI**: Notification-style components for group invites and a "Join" flow.
+    - [ ] **3.3.3 Leave Logic**: Implementation of the "Leave Group" functionality for members.
+- [ ] **3.4 Social Polish & Notifications**:
+    - [ ] **3.4.1 Global Badge**: Navbar indicator for total pending social actions (requests + invites).
+    - [ ] **3.4.2 Optimistic UI**: Implement React state updates before API confirmation for social actions.
+    - [ ] **3.4.3 Toast Feedback**: Standardize success/error notifications for all social interactions.
+- [ ] **3.5 Social Testing**:
+    - [ ] **3.5.1 Backend Handlers**: Write comprehensive unit tests for `social.go` handlers.
+    - [ ] **3.5.2 Frontend Components**: Write Vitest tests for the Friends dashboard, Group views, and Search.
 
 ### Phase 4: Recipe System (The Core)
 - [ ] **4.1 Recipe Models**: Implement `Recipe`, `Ingredient`, and `Tag` models.

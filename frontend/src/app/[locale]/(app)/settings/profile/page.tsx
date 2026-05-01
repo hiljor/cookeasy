@@ -77,8 +77,9 @@ export default function EditProfilePage() {
         />
         
         <div className="w-full">
-          <label className="block text-sm font-medium text-muted mb-1">{t("bio")}</label>
+          <label htmlFor="bio" className="block text-sm font-medium text-muted mb-1">{t("bio")}</label>
           <textarea
+            id="bio"
             className="flex w-full rounded-md border border-border bg-background px-3 py-2 text-sm placeholder:text-muted focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-1 min-h-[120px] text-foreground"
             value={bio}
             onChange={(e) => setBio(e.target.value)}

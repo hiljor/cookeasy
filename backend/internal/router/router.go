@@ -3,6 +3,8 @@ package router
 import (
 	"cookeasy/backend/internal/handlers"
 	"cookeasy/backend/internal/middleware"
+	"os"
+	"strings"
 
 	"github.com/gin-gonic/gin"
 )
@@ -10,6 +12,16 @@ import (
 /* SetupRouter configures the Gin engine with middleware and API routes */
 func SetupRouter() *gin.Engine {
 	r := gin.Default()
+
+	// Configure trusted proxies from environment variable
+	trustedProxies := os.Getenv("TRUSTED_PROXIES")
+	if trustedProxies != "" {
+		proxies := strings.Split(trustedProxies, ",")
+		r.SetTrustedProxies(proxies)
+	} else {
+		// Default to nil (trust no proxies) for security
+		r.SetTrustedProxies(nil)
+	}
 
 	r.Use(middleware.CORS())
 
@@ -31,6 +43,13 @@ func SetupRouter() *gin.Engine {
 			protected.PATCH("/me/settings", handlers.UpdateUserSettings)
 			protected.POST("/logout", handlers.Logout)
 		}
+	}
+
+	// User routes
+	users := r.Group("/api/users")
+	users.Use(middleware.AuthRequired())
+	{
+		users.GET("/search", handlers.SearchUsers)
 	}
 
 	// Social routes

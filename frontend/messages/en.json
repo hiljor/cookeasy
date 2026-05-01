@@ -41,6 +41,8 @@
     "friends": {
       "title": "Community",
       "findUsers": "Find Users",
+      "searchPlaceholder": "Search by username...",
+      "noResults": "No users found matching \"{query}\"",
       "tabs": {
         "all": "My Friends",
         "requests": "Pending Requests"
@@ -61,7 +63,10 @@
         "wantsToBeFriend": "Wants to be your friend",
         "accept": "Accept",
         "reject": "Reject",
-        "remove": "Remove friend"
+        "remove": "Remove friend",
+        "addFriend": "Add Friend",
+        "requestSent": "Request Sent",
+        "alreadyFriends": "Already Friends"
       }
     },
     "profile": {

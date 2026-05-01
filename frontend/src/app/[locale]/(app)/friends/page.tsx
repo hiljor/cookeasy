@@ -3,12 +3,13 @@
 import { useTranslations } from "next-intl";
 import { toast } from "sonner";
 import { useState, useEffect } from "react";
-import { Search, UserMinus, Check, X, Users, Inbox } from "lucide-react";
+import { Search, UserMinus, Check, X, Users, Inbox, UserPlus } from "lucide-react";
 import { Button } from "@/components/ui/form/Button";
 import { Card, CardContent } from "@/components/ui/layout/Card";
 import { Avatar } from "@/components/ui/display/Avatar";
 import { Badge } from "@/components/ui/display/Badge";
 import { EmptyState } from "@/components/ui/display/EmptyState";
+import { Input } from "@/components/ui/form/Input";
 
 interface Friend {
   id: string;
@@ -27,7 +28,10 @@ export default function FriendsPage() {
   const t = useTranslations("Social.friends");
   const [friends, setFriends] = useState<Friend[]>([]);
   const [requests, setRequests] = useState<FriendRequest[]>([]);
+  const [searchResults, setSearchResults] = useState<Friend[]>([]);
+  const [searchQuery, setSearchQuery] = useState("");
   const [isLoading, setIsLoading] = useState(true);
+  const [isSearching, setIsSearching] = useState(false);
   const [activeTab, setActiveTab] = useState("all");
 
   const fetchData = async () => {
@@ -50,6 +54,29 @@ export default function FriendsPage() {
   useEffect(() => {
     fetchData();
   }, []);
+
+  // Debounced search
+  useEffect(() => {
+    const timer = setTimeout(async () => {
+      if (searchQuery.trim().length >= 2) {
+        setIsSearching(true);
+        try {
+          const res = await fetch(`/api/users/search?q=${encodeURIComponent(searchQuery)}`);
+          if (res.ok) {
+            setSearchResults(await res.json());
+          }
+        } catch (error) {
+          console.error("Search failed", error);
+        } finally {
+          setIsSearching(false);
+        }
+      } else {
+        setSearchResults([]);
+      }
+    }, 500);
+
+    return () => clearTimeout(timer);
+  }, [searchQuery]);
 
   const handleRespond = async (requestId: string, action: "accepted" | "rejected") => {
     try {
@@ -87,18 +114,80 @@ export default function FriendsPage() {
     }
   };
 
+  const handleSendRequest = async (userId: string) => {
+    try {
+      const res = await fetch("/api/social/friends/request", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ receiver_id: userId }),
+      });
+      if (res.ok) {
+        toast.success(t("actions.requestSent"));
+        // Potentially clear search query or update results locally
+      } else {
+        const data = await res.json();
+        throw new Error(data.error || "Failed to send request");
+      }
+    } catch (error: any) {
+      toast.error(error.message);
+    }
+  };
+
+  const isFriend = (userId: string) => friends.some(f => f.id === userId);
+
   return (
     <div className="max-w-4xl mx-auto p-4 sm:p-8">
       <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 mb-8">
         <h1 className="text-3xl font-bold dark:text-white">{t("title")}</h1>
         <div className="flex gap-2 w-full sm:w-auto">
-          <Button variant="outline" className="flex-1 sm:flex-none dark:bg-zinc-900 dark:border-zinc-800">
-            <Search className="w-4 h-4 mr-2" /> {t("findUsers")}
-          </Button>
+          <div className="relative flex-1 sm:w-64">
+            <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted" />
+            <Input 
+                className="pl-10" 
+                placeholder={t("searchPlaceholder")}
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
+            />
+          </div>
         </div>
       </div>
 
-      <div className="flex gap-4 border-b border-zinc-200 dark:border-zinc-800 mb-6 overflow-x-auto">
+      {searchQuery.trim().length >= 2 ? (
+        <div className="mb-12">
+            <h2 className="text-sm font-semibold text-muted uppercase tracking-wider mb-4">
+                {isSearching ? t("loading") : t("findUsers")}
+            </h2>
+            <div className="grid gap-4 sm:grid-cols-2">
+                {searchResults.length === 0 && !isSearching ? (
+                    <div className="sm:col-span-2 text-center py-8 text-muted border-2 border-dashed border-border rounded-xl">
+                        {t("noResults", { query: searchQuery })}
+                    </div>
+                ) : (
+                    searchResults.map((user) => (
+                        <Card key={user.id} className="border-primary/20">
+                            <CardContent className="flex items-center gap-4 p-4">
+                                <Avatar src={user.profile_picture_url} fallback={user.username} />
+                                <div className="flex-1 min-w-0">
+                                    <p className="font-semibold truncate">@{user.username}</p>
+                                    <p className="text-xs text-muted truncate">{user.bio || "No bio"}</p>
+                                </div>
+                                {isFriend(user.id) ? (
+                                    <Badge variant="outline" className="text-[10px]">{t("actions.alreadyFriends")}</Badge>
+                                ) : (
+                                    <Button size="sm" variant="outline" className="h-8" onClick={() => handleSendRequest(user.id)}>
+                                        <UserPlus className="h-3 w-3 mr-1" /> {t("actions.addFriend")}
+                                    </Button>
+                                )}
+                            </CardContent>
+                        </Card>
+                    ))
+                )}
+            </div>
+            <div className="mt-8 border-b border-border" />
+        </div>
+      ) : null}
+
+      <div className="flex gap-4 border-b border-border mb-6 overflow-x-auto">
         <button 
           onClick={() => setActiveTab("all")}
           className={`pb-4 px-2 text-sm font-medium transition-colors relative whitespace-nowrap ${activeTab === "all" ? "text-primary" : "text-zinc-500 hover:text-zinc-700 dark:text-zinc-400 dark:hover:text-zinc-200"}`}

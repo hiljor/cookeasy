@@ -48,7 +48,18 @@ Run backend integration tests:
 pnpm test:backend
 ```
 
+## Deployment
 
+### Backend Security (Gin Proxies)
+When deploying the Go backend behind a reverse proxy or load balancer (e.g., Nginx, Cloudflare, AWS ALB), you must configure the trusted proxies to prevent IP spoofing.
+
+The application reads this configuration from the `TRUSTED_PROXIES` environment variable (a comma-separated list of IP addresses).
+
+1. Update your `.env` file (or CI/CD environment variables):
+   ```env
+   TRUSTED_PROXIES=192.168.1.1,10.0.0.1
+   ```
+2. If the variable is empty or missing, the backend defaults to "trust no proxies" for security.
 
 ## Planned features:
 

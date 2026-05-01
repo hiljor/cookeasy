@@ -10,7 +10,7 @@ import (
 
 /* UpdateUserSettings updates the authenticated user's settings */
 func UpdateUserSettings(c *gin.Context) {
-	userID, _ := c.Get("userID")
+	userID, _ := c.Get("user_id")
 
 	var settings models.UserSettings
 	if err := database.DB.Where("user_id = ?", userID).First(&settings).Error; err != nil {
@@ -37,4 +37,28 @@ func UpdateUserSettings(c *gin.Context) {
 	}
 
 	c.JSON(http.StatusOK, settings)
+}
+
+/* SearchUsers finds users by partial username match, excluding the current user */
+func SearchUsers(c *gin.Context) {
+	query := c.Query("q")
+	if query == "" {
+		c.JSON(http.StatusOK, []models.User{})
+		return
+	}
+
+	currentUserID, _ := c.Get("user_id")
+
+	var users []models.User
+	// Use ILIKE for Postgres case-insensitive search, or LOWER() for SQLite compatibility
+	// Selecting only public fields for security
+	if err := database.DB.Select("id, username, bio, profile_picture_url").
+		Where("username LIKE ? AND id != ?", "%"+query+"%", currentUserID).
+		Limit(10).
+		Find(&users).Error; err != nil {
+		c.JSON(http.StatusInternalServerError, gin.H{"error": "Failed to search users"})
+		return
+	}
+
+	c.JSON(http.StatusOK, users)
 }

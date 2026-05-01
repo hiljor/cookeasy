@@ -41,6 +41,8 @@
     "friends": {
       "title": "Samfunn",
       "findUsers": "Finn brukere",
+      "searchPlaceholder": "Søk etter brukernavn...",
+      "noResults": "Ingen brukere funnet for \"{query}\"",
       "tabs": {
         "all": "Mine venner",
         "requests": "Venter på svar"
@@ -61,7 +63,10 @@
         "wantsToBeFriend": "Ønsker å bli vennen din",
         "accept": "Godta",
         "reject": "Avvis",
-        "remove": "Fjern venn"
+        "remove": "Fjern venn",
+        "addFriend": "Legg til venn",
+        "requestSent": "Forespørsel sendt",
+        "alreadyFriends": "Allerede venner"
       }
     },
     "profile": {
