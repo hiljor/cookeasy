@@ -14,12 +14,12 @@ interface EmptyStateProps {
 
 export function EmptyState({ icon: Icon, title, description, action }: EmptyStateProps) {
   return (
-    <div className="flex flex-col items-center justify-center rounded-3xl border-2 border-dashed border-zinc-200 bg-zinc-50/50 p-12 text-center dark:border-zinc-800 dark:bg-zinc-900/20">
-      <div className="mb-4 flex h-20 w-20 items-center justify-center rounded-full bg-primary-verylight dark:bg-primary-verydark/20">
-        <Icon className="h-10 w-10 text-primary-dark dark:text-primary" />
+    <div className="flex flex-col items-center justify-center rounded-3xl border-2 border-dashed border-border bg-card/50 p-12 text-center">
+      <div className="mb-4 flex h-20 w-20 items-center justify-center rounded-full bg-primary-verylight">
+        <Icon className="h-10 w-10 text-primary-dark" />
       </div>
-      <h3 className="mb-2 text-xl font-bold text-zinc-900 dark:text-white">{title}</h3>
-      <p className="mx-auto mb-8 max-w-[280px] text-zinc-500 dark:text-zinc-400">
+      <h3 className="mb-2 text-xl font-bold text-foreground">{title}</h3>
+      <p className="mx-auto mb-8 max-w-[280px] text-muted">
         {description}
       </p>
       {action && (

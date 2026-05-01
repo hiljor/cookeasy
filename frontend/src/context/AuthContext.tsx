@@ -9,6 +9,13 @@ interface User {
   email: string;
   bio?: string;
   profile_picture_url?: string;
+  settings?: {
+    theme: string;
+    notify_friend_request: boolean;
+    notify_request_accepted: boolean;
+    notify_recipe_made: boolean;
+    notify_added_to_cookbook: boolean;
+  };
 }
 
 interface AuthContextType {

@@ -76,5 +76,26 @@
         }
       }
     }
+  },
+  "Settings": {
+    "profile": {
+      "title": "Edit Profile",
+      "pfp": "Profile Picture",
+      "username": "Username",
+      "bio": "Bio",
+      "bioPlaceholder": "Tell us about your cooking journey...",
+      "appearance": "Appearance",
+      "save": "Save Changes",
+      "cancel": "Cancel",
+      "success": "Profile updated successfully!",
+      "error": "Failed to update profile"
+    },
+    "themes": {
+      "default": "Default",
+      "midnight": "Midnight",
+      "earthy": "Earthy",
+      "ocean": "Ocean",
+      "sakura": "Sakura"
+    }
   }
 }

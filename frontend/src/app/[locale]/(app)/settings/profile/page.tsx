@@ -6,10 +6,11 @@ import { Button } from "@/components/ui/form/Button";
 import { Input } from "@/components/ui/form/Input";
 import { ImageUpload } from "@/components/ui/form/ImageUpload";
 import { ThemeSelector } from "@/components/ui/form/ThemeSelector";
-
 import { useRouter } from "next/navigation";
+import { useTranslations } from "next-intl";
 
 export default function EditProfilePage() {
+  const t = useTranslations("Settings.profile");
   const { user, refreshUser } = useAuth();
   const router = useRouter();
   const [username, setUsername] = useState("");
@@ -38,11 +39,11 @@ export default function EditProfilePage() {
 
       if (!response.ok) {
         const data = await response.json();
-        throw new Error(data.error || "Failed to update profile");
+        throw new Error(data.error || t("error"));
       }
 
       await refreshUser();
-      setMessage({ type: "success", text: "Profile updated successfully!" });
+      setMessage({ type: "success", text: t("success") });
       
       // Redirect back to profile after a short delay
       setTimeout(() => {
@@ -57,10 +58,10 @@ export default function EditProfilePage() {
 
   return (
     <div className="max-w-xl mx-auto p-4 sm:p-8">
-      <h1 className="text-2xl font-bold mb-8">Edit Profile</h1>
+      <h1 className="text-2xl font-bold mb-8 text-foreground">{t("title")}</h1>
       
       <div className="mb-8">
-        <label className="block text-sm font-medium text-gray-700 mb-4 text-center">Profile Picture</label>
+        <label className="block text-sm font-medium text-muted mb-4 text-center">{t("pfp")}</label>
         <ImageUpload 
           currentImage={user?.profile_picture_url} 
           onUploadSuccess={() => refreshUser()} 
@@ -69,26 +70,26 @@ export default function EditProfilePage() {
 
       <form onSubmit={handleSubmit} className="space-y-6">
         <Input
-          label="Username"
+          label={t("username")}
           value={username}
           onChange={(e) => setUsername(e.target.value)}
           required
         />
         
         <div className="w-full">
-          <label className="block text-sm font-medium text-gray-700 mb-1">Bio</label>
+          <label className="block text-sm font-medium text-muted mb-1">{t("bio")}</label>
           <textarea
-            className="flex w-full rounded-md border border-[var(--color-border)] bg-[var(--color-background)] px-3 py-2 text-sm placeholder:text-[var(--color-muted)] focus:outline-none focus:ring-2 focus:ring-[var(--color-primary)] focus:ring-offset-1 min-h-[120px]"
+            className="flex w-full rounded-md border border-border bg-background px-3 py-2 text-sm placeholder:text-muted focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-1 min-h-[120px] text-foreground"
             value={bio}
             onChange={(e) => setBio(e.target.value)}
             maxLength={500}
-            placeholder="Tell us about your cooking journey..."
+            placeholder={t("bioPlaceholder")}
           />
-          <p className="text-xs text-[var(--color-muted)] mt-1 text-right">{bio.length}/500</p>
+          <p className="text-xs text-muted mt-1 text-right">{bio.length}/500</p>
         </div>
 
-        <div className="pt-6 border-t border-[var(--color-border)]">
-            <h2 className="text-lg font-semibold mb-4">Appearance</h2>
+        <div className="pt-6 border-t border-border">
+            <h2 className="text-lg font-semibold mb-4 text-foreground">{t("appearance")}</h2>
             <ThemeSelector />
         </div>
 
@@ -100,10 +101,10 @@ export default function EditProfilePage() {
 
         <div className="flex gap-4">
           <Button type="submit" isLoading={isLoading} className="flex-1">
-            Save Changes
+            {t("save")}
           </Button>
           <Button type="button" variant="outline" onClick={() => router.back()}>
-            Cancel
+            {t("cancel")}
           </Button>
         </div>
       </form>

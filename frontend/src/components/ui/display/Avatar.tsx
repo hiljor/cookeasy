@@ -16,11 +16,11 @@ export function Avatar({ src, alt, fallback, size = "md", className }: AvatarPro
   };
 
   return (
-    <div className={`relative flex shrink-0 overflow-hidden rounded-full bg-gray-100 border border-gray-200 ${sizes[size]} ${className || ""}`}>
+    <div className={`relative flex shrink-0 overflow-hidden rounded-full bg-card border border-border ${sizes[size]} ${className || ""}`}>
       {src ? (
         <img src={src} alt={alt} className="aspect-square h-full w-full object-cover" />
       ) : (
-        <div className="flex h-full w-full items-center justify-center font-medium text-gray-500 uppercase">
+        <div className="flex h-full w-full items-center justify-center font-medium text-muted uppercase">
           {fallback.substring(0, 2)}
         </div>
       )}

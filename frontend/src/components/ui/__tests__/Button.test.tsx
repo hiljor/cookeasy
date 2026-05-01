@@ -11,13 +11,13 @@ describe('Button Component', () => {
   it('applies the primary variant classes by default', () => {
     render(<Button>Primary</Button>);
     const button = screen.getByRole('button', { name: /primary/i });
-    expect(button).toHaveClass('bg-primary');
+    expect(button).toHaveClass('bg-[var(--color-primary)]');
   });
 
   it('applies the outline variant classes when specified', () => {
     render(<Button variant="outline">Outline</Button>);
     const button = screen.getByRole('button', { name: /outline/i });
-    expect(button).toHaveClass('border-gray-300');
+    expect(button).toHaveClass('border-[var(--color-border)]');
   });
 
   it('shows loading spinner when isLoading is true', () => {

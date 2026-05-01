@@ -20,7 +20,7 @@ export default function Navbar() {
   };
 
   return (
-    <nav className="sticky top-0 z-50 w-full border-b border-zinc-200 bg-white/80 backdrop-blur-md dark:border-zinc-800 dark:bg-black/80">
+    <nav className="sticky top-0 z-50 w-full border-b border-border bg-background/80 backdrop-blur-md">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <div className="flex h-16 items-center justify-between">
           <div className="flex items-center gap-8">
@@ -31,7 +31,7 @@ export default function Navbar() {
               <Link
                 href="/recipes"
                 className={`text-sm font-medium transition-colors hover:text-primary ${
-                  pathname === "/recipes" ? "text-primary-dark" : "text-zinc-600 dark:text-zinc-400"
+                  pathname === "/recipes" ? "text-primary-dark" : "text-muted"
                 }`}
               >
                 {t("nav.recipes")}
@@ -39,7 +39,7 @@ export default function Navbar() {
               <Link
                 href="/friends"
                 className={`text-sm font-medium transition-colors hover:text-primary ${
-                  pathname === "/friends" ? "text-primary-dark" : "text-zinc-600 dark:text-zinc-400"
+                  pathname === "/friends" ? "text-primary-dark" : "text-muted"
                 }`}
               >
                 {t("nav.friends")}
@@ -51,7 +51,7 @@ export default function Navbar() {
             <button
               onClick={toggleLocale}
               aria-label="Toggle language"
-              className="flex items-center gap-1 rounded-full px-3 py-1 text-xs font-medium uppercase tracking-wider text-zinc-500 hover:bg-zinc-100 dark:text-zinc-400 dark:hover:bg-zinc-900"
+              className="flex items-center gap-1 rounded-full px-3 py-1 text-xs font-medium uppercase tracking-wider text-muted hover:bg-border/20"
             >
               <Globe className="h-3 w-3" />
               {locale}
@@ -62,19 +62,19 @@ export default function Navbar() {
                 href={`/u/${user.username}`}
                 className={`flex items-center gap-2 rounded-full border p-1 pr-3 transition-colors ${
                   pathname.startsWith(`/u/${user.username}`)
-                    ? "border-primary-verylight bg-orange-50/50 dark:border-primary-verydark/30 dark:bg-primary-verydark/10"
-                    : "border-zinc-200 dark:border-zinc-800"
+                    ? "border-primary-verylight bg-primary-verylight/30"
+                    : "border-border"
                 }`}
               >
                 <div className={`flex h-7 w-7 items-center justify-center rounded-full transition-colors ${
                   pathname.startsWith(`/u/${user.username}`)
-                    ? "bg-primary text-white"
-                    : "bg-primary-verylight text-primary-dark dark:bg-primary-verydark/30"
+                    ? "bg-primary text-primary-foreground"
+                    : "bg-primary-verylight text-primary-dark"
                 }`}>
                   <User className="h-4 w-4" />
                 </div>
                 <span className={`text-xs font-medium hidden sm:block ${
-                  pathname.startsWith(`/u/${user.username}`) ? "text-primary-dark dark:text-primary-light" : ""
+                  pathname.startsWith(`/u/${user.username}`) ? "text-primary-dark" : ""
                 }`}>
                   {user.username}
                 </span>
@@ -83,7 +83,7 @@ export default function Navbar() {
               <Link
                 href="/login"
                 className={`hidden sm:block text-sm font-medium transition-colors hover:text-primary ${
-                  pathname === "/login" ? "text-primary-dark" : "text-zinc-600 dark:text-zinc-400"
+                  pathname === "/login" ? "text-primary-dark" : "text-muted"
                 }`}
               >
                 {t("nav.profile")}
@@ -93,7 +93,7 @@ export default function Navbar() {
             <button
               onClick={() => setIsMenuOpen(!isMenuOpen)}
               aria-label="Toggle menu"
-              className="rounded-md p-2 text-zinc-600 hover:bg-zinc-100 dark:text-zinc-400 dark:hover:bg-zinc-900 md:hidden"
+              className="rounded-md p-2 text-muted hover:bg-border/20 md:hidden"
             >
               {isMenuOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
             </button>
@@ -103,14 +103,14 @@ export default function Navbar() {
 
       {/* Mobile menu */}
       {isMenuOpen && (
-        <div className="border-b border-zinc-200 bg-white dark:border-zinc-800 dark:bg-black md:hidden">
+        <div className="border-b border-border bg-background md:hidden">
           <div className="space-y-1 px-4 py-3">
             <Link
               href="/recipes"
               className={`block rounded-md px-3 py-2 text-base font-medium transition-colors ${
                 pathname === "/recipes"
-                  ? "bg-orange-50 text-primary-dark dark:bg-primary-verydark/20 dark:text-primary-light"
-                  : "text-zinc-600 hover:bg-zinc-50 dark:text-zinc-400 dark:hover:bg-zinc-900"
+                  ? "bg-primary-verylight/50 text-primary-dark"
+                  : "text-muted hover:bg-border/10"
               }`}
               onClick={() => setIsMenuOpen(false)}
             >
@@ -120,8 +120,8 @@ export default function Navbar() {
               href="/friends"
               className={`block rounded-md px-3 py-2 text-base font-medium transition-colors ${
                 pathname === "/friends"
-                  ? "bg-orange-50 text-primary-dark dark:bg-primary-verydark/20 dark:text-primary-light"
-                  : "text-zinc-600 hover:bg-zinc-50 dark:text-zinc-400 dark:hover:bg-zinc-900"
+                  ? "bg-primary-verylight/50 text-primary-dark"
+                  : "text-muted hover:bg-border/10"
               }`}
               onClick={() => setIsMenuOpen(false)}
             >
@@ -132,8 +132,8 @@ export default function Navbar() {
                 href="/login"
                 className={`block rounded-md px-3 py-2 text-base font-medium transition-colors ${
                   pathname === "/login"
-                    ? "bg-orange-50 text-primary-dark dark:bg-primary-verydark/20 dark:text-primary-light"
-                    : "text-zinc-600 hover:bg-zinc-50 dark:text-zinc-400 dark:hover:bg-zinc-900"
+                    ? "bg-primary-verylight/50 text-primary-dark"
+                    : "text-muted hover:bg-border/10"
               }`}
                 onClick={() => setIsMenuOpen(false)}
               >

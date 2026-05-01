@@ -3,11 +3,11 @@
 import { useEffect, useState } from "react";
 import { useParams } from "next/navigation";
 import { useAuth } from "@/context/AuthContext";
-import { Button } from "@/components/ui/Button";
+import { Button } from "@/components/ui/form/Button";
 import Link from "next/link";
 import { ChefHat } from "lucide-react";
 import { useTranslations } from "next-intl";
-import { EmptyState } from "@/components/ui/EmptyState";
+import { EmptyState } from "@/components/ui/display/EmptyState";
 
 interface UserProfile {
   id: string;

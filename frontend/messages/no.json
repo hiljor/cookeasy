@@ -76,5 +76,26 @@
         }
       }
     }
+  },
+  "Settings": {
+    "profile": {
+      "title": "Rediger profil",
+      "pfp": "Profilbilde",
+      "username": "Brukernavn",
+      "bio": "Bio",
+      "bioPlaceholder": "Fortell oss om din kulinariske reise...",
+      "appearance": "Utseende",
+      "save": "Lagre endringer",
+      "cancel": "Avbryt",
+      "success": "Profilen ble oppdatert!",
+      "error": "Kunne ikke oppdatere profilen"
+    },
+    "themes": {
+      "default": "Standard",
+      "midnight": "Midnatt",
+      "earthy": "Jordnær",
+      "ocean": "Hav",
+      "sakura": "Sakura"
+    }
   }
 }
