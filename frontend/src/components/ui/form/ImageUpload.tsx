@@ -83,7 +83,7 @@ export function ImageUpload({ currentImage, onUploadSuccess }: ImageUploadProps)
       />
 
       {error && <p className="text-xs text-red-500">{error}</p>}
-      {isUploading && <p className="text-xs text-orange-500 animate-pulse">Uploading...</p>}
+      {isUploading && <p className="text-xs text-primary animate-pulse">Uploading...</p>}
     </div>
   );
 }

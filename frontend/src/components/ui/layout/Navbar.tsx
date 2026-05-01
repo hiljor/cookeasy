@@ -24,22 +24,22 @@ export default function Navbar() {
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <div className="flex h-16 items-center justify-between">
           <div className="flex items-center gap-8">
-            <Link href="/" className="text-xl font-bold tracking-tight text-orange-600">
+            <Link href="/" className="text-xl font-bold tracking-tight text-primary-dark">
               {t("appName")}
             </Link>
             <div className="hidden md:flex md:items-center md:gap-6">
               <Link
                 href="/recipes"
-                className={`text-sm font-medium transition-colors hover:text-orange-500 ${
-                  pathname === "/recipes" ? "text-orange-600" : "text-zinc-600 dark:text-zinc-400"
+                className={`text-sm font-medium transition-colors hover:text-primary ${
+                  pathname === "/recipes" ? "text-primary-dark" : "text-zinc-600 dark:text-zinc-400"
                 }`}
               >
                 {t("nav.recipes")}
               </Link>
               <Link
                 href="/friends"
-                className={`text-sm font-medium transition-colors hover:text-orange-500 ${
-                  pathname === "/friends" ? "text-orange-600" : "text-zinc-600 dark:text-zinc-400"
+                className={`text-sm font-medium transition-colors hover:text-primary ${
+                  pathname === "/friends" ? "text-primary-dark" : "text-zinc-600 dark:text-zinc-400"
                 }`}
               >
                 {t("nav.friends")}
@@ -62,19 +62,19 @@ export default function Navbar() {
                 href={`/u/${user.username}`}
                 className={`flex items-center gap-2 rounded-full border p-1 pr-3 transition-colors ${
                   pathname.startsWith(`/u/${user.username}`)
-                    ? "border-orange-200 bg-orange-50/50 dark:border-orange-900/30 dark:bg-orange-900/10"
+                    ? "border-primary-verylight bg-orange-50/50 dark:border-primary-verydark/30 dark:bg-primary-verydark/10"
                     : "border-zinc-200 dark:border-zinc-800"
                 }`}
               >
                 <div className={`flex h-7 w-7 items-center justify-center rounded-full transition-colors ${
                   pathname.startsWith(`/u/${user.username}`)
-                    ? "bg-orange-500 text-white"
-                    : "bg-orange-100 text-orange-600 dark:bg-orange-900/30"
+                    ? "bg-primary text-white"
+                    : "bg-primary-verylight text-primary-dark dark:bg-primary-verydark/30"
                 }`}>
                   <User className="h-4 w-4" />
                 </div>
                 <span className={`text-xs font-medium hidden sm:block ${
-                  pathname.startsWith(`/u/${user.username}`) ? "text-orange-700 dark:text-orange-400" : ""
+                  pathname.startsWith(`/u/${user.username}`) ? "text-primary-dark dark:text-primary-light" : ""
                 }`}>
                   {user.username}
                 </span>
@@ -82,8 +82,8 @@ export default function Navbar() {
             ) : (
               <Link
                 href="/login"
-                className={`hidden sm:block text-sm font-medium transition-colors hover:text-orange-500 ${
-                  pathname === "/login" ? "text-orange-600" : "text-zinc-600 dark:text-zinc-400"
+                className={`hidden sm:block text-sm font-medium transition-colors hover:text-primary ${
+                  pathname === "/login" ? "text-primary-dark" : "text-zinc-600 dark:text-zinc-400"
                 }`}
               >
                 {t("nav.profile")}
@@ -109,7 +109,7 @@ export default function Navbar() {
               href="/recipes"
               className={`block rounded-md px-3 py-2 text-base font-medium transition-colors ${
                 pathname === "/recipes"
-                  ? "bg-orange-50 text-orange-600 dark:bg-orange-900/20 dark:text-orange-400"
+                  ? "bg-orange-50 text-primary-dark dark:bg-primary-verydark/20 dark:text-primary-light"
                   : "text-zinc-600 hover:bg-zinc-50 dark:text-zinc-400 dark:hover:bg-zinc-900"
               }`}
               onClick={() => setIsMenuOpen(false)}
@@ -120,7 +120,7 @@ export default function Navbar() {
               href="/friends"
               className={`block rounded-md px-3 py-2 text-base font-medium transition-colors ${
                 pathname === "/friends"
-                  ? "bg-orange-50 text-orange-600 dark:bg-orange-900/20 dark:text-orange-400"
+                  ? "bg-orange-50 text-primary-dark dark:bg-primary-verydark/20 dark:text-primary-light"
                   : "text-zinc-600 hover:bg-zinc-50 dark:text-zinc-400 dark:hover:bg-zinc-900"
               }`}
               onClick={() => setIsMenuOpen(false)}
@@ -132,7 +132,7 @@ export default function Navbar() {
                 href="/login"
                 className={`block rounded-md px-3 py-2 text-base font-medium transition-colors ${
                   pathname === "/login"
-                    ? "bg-orange-50 text-orange-600 dark:bg-orange-900/20 dark:text-orange-400"
+                    ? "bg-orange-50 text-primary-dark dark:bg-primary-verydark/20 dark:text-primary-light"
                     : "text-zinc-600 hover:bg-zinc-50 dark:text-zinc-400 dark:hover:bg-zinc-900"
               }`}
                 onClick={() => setIsMenuOpen(false)}
