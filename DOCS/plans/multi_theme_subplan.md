@@ -9,7 +9,7 @@ We will use **CSS Variables (Custom Properties)** scoped to data-attributes on t
 ## 3. Detailed Tasks
 
 ### 3.1 CSS Architecture (Semantic Tokens)
-- [ ] **Refactor `globals.css`**: Define a set of semantic variables that every theme must implement:
+- [x] **Refactor `globals.css`**: Define a set of semantic variables that every theme must implement:
     - `--color-background`: Main background color.
     - `--color-foreground`: Main text color.
     - `--color-card`: Surface color for cards/modals.
@@ -20,9 +20,9 @@ We will use **CSS Variables (Custom Properties)** scoped to data-attributes on t
 - [ ] **Default Theme Implementation**: Map current zinc/orange colors to these variables.
 
 ### 3.2 Theme Definitions
-- [ ] **Midnight Theme**: Deep indigo/slate palette for a "developer" feel.
-- [ ] **Earthy Theme**: Forest green and warm beige palette for a "natural cooking" feel.
-- [ ] **Ocean Theme**: Teal and cool grey palette for a "fresh/modern" feel.
+- [x] **Midnight Theme**: Deep indigo/slate palette for a "developer" feel.
+- [x] **Earthy Theme**: Forest green and warm beige palette for a "natural cooking" feel.
+- [x] **Ocean Theme**: Teal and cool grey palette for a "fresh/modern" feel.
 - [ ] **Theme Config**: Create a TypeScript constant `THEMES` in `src/context/ThemeContext.tsx` to hold theme metadata (id, name, icon).
 
 ### 3.3 Persistence & Backend Integration

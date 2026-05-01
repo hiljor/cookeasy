@@ -6,6 +6,10 @@
   --color-card: var(--color-card);
   --color-primary: var(--color-primary);
   --color-primary-foreground: var(--color-primary-foreground);
+  --color-primary-light: var(--color-primary-light);
+  --color-primary-verylight: var(--color-primary-verylight);
+  --color-primary-dark: var(--color-primary-dark);
+  --color-primary-verydark: var(--color-primary-verydark);
   --color-border: var(--color-border);
   --color-muted: var(--color-muted);
   --font-sans: var(--font-geist-sans);
@@ -16,10 +20,14 @@
   --color-background: #ffffff;
   --color-foreground: #171717;
   --color-card: #f9f9f9;
-  --color-primary: #f97316; /* orange-500 */
+  --color-primary: #269f71; /* primary */
+  --color-primary-light: #6fd4a3;
   --color-primary-foreground: #ffffff;
+  --color-primary-verylight: #c8e6d9;
+  --color-primary-dark: #1f7a5a;
+  --color-primary-verydark: #0f4a35;
   --color-border: #e5e5e5;
-  --color-muted: #737373;
+  --color-muted: #20443e;
 }
 
 [data-theme='midnight'] {
@@ -27,7 +35,11 @@
   --color-foreground: #f8fafc; /* slate-50 */
   --color-card: #1e293b; /* slate-800 */
   --color-primary: #818cf8; /* indigo-400 */
+  --color-primary-light: #adb3f5;
   --color-primary-foreground: #0f172a;
+  --color-primary-verylight: #c7d2fe;
+  --color-primary-dark: #6366f1;
+  --color-primary-verydark: #4338ca;
   --color-border: #334155; /* slate-700 */
   --color-muted: #94a3b8; /* slate-400 */
 }
@@ -37,7 +49,11 @@
   --color-foreground: #3f2e26;
   --color-card: #f5efe8;
   --color-primary: #4d7c0f; /* lime-700 */
+  --color-primary-light: #8db446;
   --color-primary-foreground: #ffffff;
+  --color-primary-verylight: #d9f99d;
+  --color-primary-dark: #365314;
+  --color-primary-verydark: #1a2e05;
   --color-border: #d6ccbe;
   --color-muted: #857463;
 }
@@ -47,9 +63,27 @@
   --color-foreground: #134e4a; /* teal-900 */
   --color-card: #ccfbf1;
   --color-primary: #0d9488; /* teal-600 */
+  --color-primary-light: #3abbb0;
   --color-primary-foreground: #ffffff;
+  --color-primary-verylight: #ccfbf1;
+  --color-primary-dark: #0f766e;
+  --color-primary-verydark: #115e59;
   --color-border: #99f6e4;
   --color-muted: #0f766e;
+}
+
+[data-theme='sakura'] {
+  --color-background: #fef7f4; /* soft pink */
+  --color-foreground: #3d2e2d;
+  --color-card: #fde8e0;
+  --color-primary: #e45e8b; /* pink-500 */
+  --color-primary-light: #f08ba6;
+  --color-primary-foreground: #ffffff;
+  --color-primary-verylight: #f8bbd0;
+  --color-primary-dark: #c2185b;
+  --color-primary-verydark: #880e4f;
+  --color-border: #f5c6d8;
+  --color-muted: #d81b60;
 }
 
 body {
