@@ -33,7 +33,7 @@ type UserSettings struct {
 	NotifyRequestAccepted bool      `gorm:"default:true" json:"notify_request_accepted"`
 	NotifyRecipeMade      bool      `gorm:"default:true" json:"notify_recipe_made"`
 	NotifyAddedToCookbook bool      `gorm:"default:true" json:"notify_added_to_cookbook"`
-	Theme                 string    `gorm:"default:'light'" json:"theme"`
+	Theme                 string    `gorm:"default:'default'" json:"theme"`
 }
 
 /* BeforeCreate ensures a new User record has a UUID */

@@ -1,23 +1,21 @@
 import { useTranslations } from "next-intl";
 import { Search, ChefHat } from "lucide-react";
 import { Link } from "@/i18n/routing";
-import Navbar from "@/components/ui/Navbar";
-import { Button } from "@/components/ui/Button";
+import Navbar from "@/components/ui/layout/Navbar";
+import { Button } from "@/components/ui/form/Button";
 
 export default function Home() {
   const t = useTranslations("HomePage");
 
   return (
     <div className="flex min-h-screen flex-col bg-zinc-50 dark:bg-black">
-      <Navbar />
-
       <main className="flex flex-1 flex-col items-center">
         {/* Daily Recipe Placeholder */}
         <section className="w-full max-w-7xl px-4 pt-6 sm:px-6 lg:px-8">
           <div className="relative overflow-hidden rounded-3xl bg-zinc-900 shadow-xl dark:bg-zinc-800">
             <div className="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent"></div>
             <div className="relative flex h-48 flex-col justify-end p-6 sm:h-64 sm:p-10">
-              <span className="mb-2 inline-flex items-center gap-1 rounded-full bg-orange-500 px-3 py-1 text-xs font-bold uppercase tracking-wider text-white">
+              <span className="mb-2 inline-flex items-center gap-1 rounded-full bg-primary px-3 py-1 text-xs font-bold uppercase tracking-wider text-white">
                 <ChefHat className="h-3 w-3" />
                 {t("dailyRecipe")}
               </span >
@@ -29,7 +27,7 @@ export default function Home() {
               </p>
             </div>
             {/* Simple decorative placeholder image/gradient */}
-            <div className="absolute top-0 right-0 -z-10 h-full w-full bg-gradient-to-br from-orange-500/20 to-transparent"></div>
+            <div className="absolute top-0 right-0 -z-10 h-full w-full bg-gradient-to-br from-primary/20 to-transparent"></div>
           </div>
         </section>
 
@@ -46,18 +44,18 @@ export default function Home() {
             <input
               type="text"
               placeholder={t("searchPlaceholder")}
-              className="h-16 w-full rounded-2xl border border-zinc-200 bg-white pl-12 pr-4 text-lg shadow-sm focus:border-orange-500 focus:outline-none focus:ring-2 focus:ring-orange-500/20 dark:border-zinc-800 dark:bg-zinc-900 dark:text-white"
+              className="h-16 w-full rounded-2xl border border-zinc-200 bg-white pl-12 pr-4 text-lg shadow-sm focus:border-primary focus:outline-none focus:ring-2 focus:ring-primary/20 dark:border-zinc-800 dark:bg-zinc-900 dark:text-white"
             />
           </div>
 
           <div className="mt-8 flex flex-row items-center gap-4">
             <Link href="/register">
-              <Button size="lg" className="rounded-xl px-8 shadow-lg shadow-orange-500/20">
+              <Button size="lg" className="rounded-xl px-8 shadow-lg shadow-primary/20">
                 {t("getStarted")}
               </Button>
             </Link>
             <Link href="/login">
-              <Button variant="outline" size="lg" className="rounded-xl px-8 bg-white dark:bg-zinc-900">
+              <Button variant="outline" size="lg" className="rounded-xl px-8 bg-white dark:bg-white-900">
                 {t("login")}
               </Button>
             </Link>

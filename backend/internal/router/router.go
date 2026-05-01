@@ -28,6 +28,7 @@ func SetupRouter() *gin.Engine {
 			protected.GET("/me", handlers.GetMe)
 			protected.PUT("/me", handlers.UpdateMe)
 			protected.PUT("/me/avatar", handlers.UpdateProfilePicture)
+			protected.PATCH("/me/settings", handlers.UpdateUserSettings)
 			protected.POST("/logout", handlers.Logout)
 		}
 	}

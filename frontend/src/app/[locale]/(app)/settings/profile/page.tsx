@@ -2,9 +2,11 @@
 
 import { useState, useEffect } from "react";
 import { useAuth } from "@/context/AuthContext";
-import { Button } from "@/components/ui/Button";
-import { Input } from "@/components/ui/Input";
-import { ImageUpload } from "@/components/ui/ImageUpload";
+import { Button } from "@/components/ui/form/Button";
+import { Input } from "@/components/ui/form/Input";
+import { ImageUpload } from "@/components/ui/form/ImageUpload";
+import { ThemeSelector } from "@/components/ui/form/ThemeSelector";
+
 import { useRouter } from "next/navigation";
 
 export default function EditProfilePage() {
@@ -76,13 +78,18 @@ export default function EditProfilePage() {
         <div className="w-full">
           <label className="block text-sm font-medium text-gray-700 mb-1">Bio</label>
           <textarea
-            className="flex w-full rounded-md border border-gray-300 bg-white px-3 py-2 text-sm placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-orange-500 focus:ring-offset-1 min-h-[120px]"
+            className="flex w-full rounded-md border border-[var(--color-border)] bg-[var(--color-background)] px-3 py-2 text-sm placeholder:text-[var(--color-muted)] focus:outline-none focus:ring-2 focus:ring-[var(--color-primary)] focus:ring-offset-1 min-h-[120px]"
             value={bio}
             onChange={(e) => setBio(e.target.value)}
             maxLength={500}
             placeholder="Tell us about your cooking journey..."
           />
-          <p className="text-xs text-gray-400 mt-1 text-right">{bio.length}/500</p>
+          <p className="text-xs text-[var(--color-muted)] mt-1 text-right">{bio.length}/500</p>
+        </div>
+
+        <div className="pt-6 border-t border-[var(--color-border)]">
+            <h2 className="text-lg font-semibold mb-4">Appearance</h2>
+            <ThemeSelector />
         </div>
 
         {message.text && (

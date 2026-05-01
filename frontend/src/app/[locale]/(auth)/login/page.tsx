@@ -3,8 +3,8 @@
 import { useState } from "react";
 import { useTranslations } from "next-intl";
 import { useRouter } from "next/navigation";
-import { Button } from "@/components/ui/Button";
-import { Input } from "@/components/ui/Input";
+import { Button } from "@/components/ui/form/Button";
+import { Input } from "@/components/ui/form/Input";
 import Link from "next/link";
 import { toast } from "sonner";
 
@@ -72,7 +72,7 @@ export default function LoginPage() {
 
         <div className="mt-8 text-center text-sm text-gray-600 dark:text-zinc-400">
           {t("noAccount")}{" "}
-          <Link href="/register" className="text-orange-500 font-semibold hover:underline">
+          <Link href="/register" className="text-primary font-semibold hover:underline">
             {t("registerLink")}
           </Link>
         </div>

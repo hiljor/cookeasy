@@ -4,11 +4,11 @@ import { useTranslations } from "next-intl";
 import { toast } from "sonner";
 import { useState, useEffect } from "react";
 import { Search, UserMinus, Check, X, Users, Inbox } from "lucide-react";
-import { Button } from "@/components/ui/Button";
-import { Card, CardContent } from "@/components/ui/Card";
-import { Avatar } from "@/components/ui/Avatar";
-import { Badge } from "@/components/ui/Badge";
-import { EmptyState } from "@/components/ui/EmptyState";
+import { Button } from "@/components/ui/form/Button";
+import { Card, CardContent } from "@/components/ui/layout/Card";
+import { Avatar } from "@/components/ui/display/Avatar";
+import { Badge } from "@/components/ui/display/Badge";
+import { EmptyState } from "@/components/ui/display/EmptyState";
 
 interface Friend {
   id: string;
@@ -101,18 +101,18 @@ export default function FriendsPage() {
       <div className="flex gap-4 border-b border-zinc-200 dark:border-zinc-800 mb-6 overflow-x-auto">
         <button 
           onClick={() => setActiveTab("all")}
-          className={`pb-4 px-2 text-sm font-medium transition-colors relative whitespace-nowrap ${activeTab === "all" ? "text-orange-500" : "text-zinc-500 hover:text-zinc-700 dark:text-zinc-400 dark:hover:text-zinc-200"}`}
+          className={`pb-4 px-2 text-sm font-medium transition-colors relative whitespace-nowrap ${activeTab === "all" ? "text-primary" : "text-zinc-500 hover:text-zinc-700 dark:text-zinc-400 dark:hover:text-zinc-200"}`}
         >
           {t("tabs.all")} ({friends.length})
-          {activeTab === "all" && <div className="absolute bottom-0 left-0 right-0 h-0.5 bg-orange-500" />}
+          {activeTab === "all" && <div className="absolute bottom-0 left-0 right-0 h-0.5 bg-primary" />}
         </button>
         <button 
           onClick={() => setActiveTab("requests")}
-          className={`pb-4 px-2 text-sm font-medium transition-colors relative whitespace-nowrap ${activeTab === "requests" ? "text-orange-500" : "text-zinc-500 hover:text-zinc-700 dark:text-zinc-400 dark:hover:text-zinc-200"}`}
+          className={`pb-4 px-2 text-sm font-medium transition-colors relative whitespace-nowrap ${activeTab === "requests" ? "text-primary" : "text-zinc-500 hover:text-zinc-700 dark:text-zinc-400 dark:hover:text-zinc-200"}`}
         >
           {t("tabs.requests")}
           {requests.length > 0 && <Badge variant="primary" className="ml-2">{requests.length}</Badge>}
-          {activeTab === "requests" && <div className="absolute bottom-0 left-0 right-0 h-0.5 bg-orange-500" />}
+          {activeTab === "requests" && <div className="absolute bottom-0 left-0 right-0 h-0.5 bg-primary" />}
         </button>
       </div>
 

@@ -8,6 +8,7 @@ import { AuthProvider } from "@/context/AuthContext";
 import { ThemeProvider } from "@/context/ThemeContext";
 import { Toaster } from "sonner";
 import "../globals.css";
+import Navbar from '@/components/ui/layout/Navbar';
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -45,6 +46,7 @@ export default async function LocaleLayout({
         <NextIntlClientProvider messages={messages}>
           <AuthProvider>
             <ThemeProvider>
+              <Navbar />
               <Toaster position="top-center" richColors />
               {children}
             </ThemeProvider>

@@ -8,17 +8,33 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
-/* GetProfileByUsername retrieves a user's public profile information */
-func GetProfileByUsername(c *gin.Context) {
-	username := c.Param("username")
+/* UpdateUserSettings updates the authenticated user's settings */
+func UpdateUserSettings(c *gin.Context) {
+	userID, _ := c.Get("userID")
 
-	var user models.User
-	// We only select public fields
-	if err := database.DB.Select("id", "username", "bio", "profile_picture_url", "created_at").
-		Where("username = ?", username).First(&user).Error; err != nil {
-		c.JSON(http.StatusNotFound, gin.H{"error": "User not found"})
+	var settings models.UserSettings
+	if err := database.DB.Where("user_id = ?", userID).First(&settings).Error; err != nil {
+		c.JSON(http.StatusNotFound, gin.H{"error": "Settings not found"})
 		return
 	}
 
-	c.JSON(http.StatusOK, user)
+	var input struct {
+		Theme *string `json:"theme"`
+	}
+
+	if err := c.ShouldBindJSON(&input); err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+		return
+	}
+
+	if input.Theme != nil {
+		settings.Theme = *input.Theme
+	}
+
+	if err := database.DB.Save(&settings).Error; err != nil {
+		c.JSON(http.StatusInternalServerError, gin.H{"error": "Failed to update settings"})
+		return
+	}
+
+	c.JSON(http.StatusOK, settings)
 }
