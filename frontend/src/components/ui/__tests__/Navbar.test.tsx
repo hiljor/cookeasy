@@ -1,6 +1,6 @@
 import { render, screen, fireEvent } from '@testing-library/react';
 import { describe, it, expect, vi } from 'vitest';
-import Navbar from '../Navbar';
+import Navbar from "../layout/Navbar";
 import { usePathname } from '@/i18n/routing';
 
 // Mock next-intl
@@ -83,6 +83,6 @@ describe('Navbar Component', () => {
     render(<Navbar />);
     
     const recipesLink = screen.getByText('Recipes');
-    expect(recipesLink).toHaveClass('text-orange-600');
+    expect(recipesLink).toHaveClass('text-primary-dark');
   });
 });

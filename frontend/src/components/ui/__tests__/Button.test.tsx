@@ -1,6 +1,6 @@
 import { render, screen } from '@testing-library/react';
 import { describe, it, expect } from 'vitest';
-import { Button } from '../Button';
+import { Button } from "../form/Button";
 
 describe('Button Component', () => {
   it('renders correctly with children', () => {
@@ -11,7 +11,7 @@ describe('Button Component', () => {
   it('applies the primary variant classes by default', () => {
     render(<Button>Primary</Button>);
     const button = screen.getByRole('button', { name: /primary/i });
-    expect(button).toHaveClass('bg-orange-500');
+    expect(button).toHaveClass('bg-primary');
   });
 
   it('applies the outline variant classes when specified', () => {
