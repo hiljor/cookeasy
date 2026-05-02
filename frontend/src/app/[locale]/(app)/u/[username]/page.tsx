@@ -5,7 +5,7 @@ import { useParams } from "next/navigation";
 import { useAuth } from "@/context/AuthContext";
 import { Button } from "@/components/ui/form/Button";
 import Link from "next/link";
-import { ChefHat } from "lucide-react";
+import { ChefHat, Lock } from "lucide-react";
 import { useTranslations } from "next-intl";
 import { EmptyState } from "@/components/ui/display/EmptyState";
 import { ProfileSkeleton } from "@/components/ui/display/Skeleton";
@@ -16,6 +16,7 @@ interface UserProfile {
   username: string;
   bio?: string;
   profile_picture_url?: string;
+  is_private?: boolean;
   created_at: string;
 }
 
@@ -43,11 +44,22 @@ export default function ProfilePage() {
     fetchProfile();
   }, [username]);
 
+  const isOwnProfile = currentUser?.username === profile?.username;
+
   return (
     <AnimatePresence mode="wait">
       {isLoading ? (
         <ProfileSkeleton key="skeleton" />
-      ) : (
+      ) : error ? (
+        <motion.div
+          key="error"
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          className="p-8 text-center text-red-500"
+        >
+          {error}
+        </motion.div>
+      ) : profile ? (
         <motion.div
           key="content"
           initial={{ opacity: 0 }}
@@ -68,7 +80,10 @@ export default function ProfilePage() {
 
             <div className="flex-1 text-center sm:text-left">
               <div className="flex flex-col sm:flex-row sm:items-center gap-4 mb-4">
-                <h1 className="text-2xl font-bold dark:text-white">@{profile.username}</h1>
+                <h1 className="text-2xl font-bold dark:text-white flex items-center justify-center sm:justify-start gap-2">
+                  @{profile.username}
+                  {profile.is_private && <Lock className="h-4 w-4 text-muted" />}
+                </h1>
                 {isOwnProfile && (
                   <Link href="/settings/profile">
                     <Button variant="outline" size="sm" className="dark:bg-zinc-900 dark:border-zinc-800">Edit Profile</Button>
@@ -76,35 +91,53 @@ export default function ProfilePage() {
                 )}
               </div>
               
-              <p className="text-gray-600 dark:text-zinc-400 mb-6">{profile.bio || "No bio yet."}</p>
-              
-              <div className="flex justify-center sm:justify-start gap-8 border-t border-b py-4 dark:border-zinc-800">
-                <div className="text-center">
-                  <span className="block font-bold dark:text-white">0</span>
-                  <span className="text-sm text-gray-500 dark:text-zinc-400">Recipes</span>
+              {!profile.is_private ? (
+                <>
+                  <p className="text-gray-600 dark:text-zinc-400 mb-6">{profile.bio || "No bio yet."}</p>
+                  
+                  <div className="flex justify-center sm:justify-start gap-8 border-t border-b py-4 dark:border-zinc-800">
+                    <div className="text-center">
+                      <span className="block font-bold dark:text-white">0</span>
+                      <span className="text-sm text-gray-500 dark:text-zinc-400">Recipes</span>
+                    </div>
+                    <div className="text-center">
+                      <span className="block font-bold dark:text-white">0</span>
+                      <span className="text-sm text-gray-500 dark:text-zinc-400">Friends</span>
+                    </div>
+                  </div>
+                </>
+              ) : (
+                <div className="bg-zinc-100 dark:bg-zinc-900/50 rounded-xl p-4 text-sm text-muted">
+                  {t("privateDescription")}
                 </div>
-                <div className="text-center">
-                  <span className="block font-bold dark:text-white">0</span>
-                  <span className="text-sm text-gray-500 dark:text-zinc-400">Friends</span>
-                </div>
-              </div>
+              )}
             </div>
           </div>
 
           <div className="space-y-6">
             <h2 className="text-xl font-bold dark:text-white">Recipes</h2>
-            <EmptyState 
-              icon={ChefHat}
-              title={isOwnProfile ? t("empty.ownRecipes.title") : t("empty.recipes.title")}
-              description={isOwnProfile ? t("empty.ownRecipes.description") : t("empty.recipes.description")}
-              action={isOwnProfile ? {
-                label: "Create First Recipe",
-                onClick: () => console.log("Create recipe clicked")
-              } : undefined}
-            />
+            {profile.is_private ? (
+              <EmptyState 
+                icon={Lock}
+                title={t("privateTitle")}
+                description={t("privateDescription")}
+              />
+            ) : (
+              <EmptyState 
+                icon={ChefHat}
+                title={isOwnProfile ? t("empty.ownRecipes.title") : t("empty.recipes.title")}
+                description={isOwnProfile ? t("empty.ownRecipes.description") : t("empty.recipes.description")}
+                action={isOwnProfile ? {
+                  label: "Create First Recipe",
+                  onClick: () => console.log("Create recipe clicked")
+                } : undefined}
+              />
+            )}
           </div>
         </motion.div>
-      )}
+      ) : null}
     </AnimatePresence>
   );
 }
+
+

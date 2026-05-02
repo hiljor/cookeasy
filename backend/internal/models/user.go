@@ -15,6 +15,7 @@ type User struct {
 	Password          string         `gorm:"not null" json:"-"`
 	Bio               *string        `json:"bio"`
 	ProfilePictureURL *string        `json:"profile_picture_url"`
+	IsPrivate         bool           `gorm:"default:false" json:"is_private"`
 	IsVerified        bool           `gorm:"default:false" json:"is_verified"`
 	VerificationToken string         `gorm:"uniqueIndex" json:"-"`
 	ResetToken        *string        `gorm:"uniqueIndex" json:"-"`

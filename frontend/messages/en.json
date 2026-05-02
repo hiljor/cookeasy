@@ -87,6 +87,8 @@
       }
     },
     "profile": {
+      "privateTitle": "This account is private",
+      "privateDescription": "Follow this chef to see their recipes and culinary journey.",
       "empty": {
         "recipes": {
           "title": "No recipes yet",

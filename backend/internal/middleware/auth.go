@@ -28,3 +28,16 @@ func AuthRequired() gin.HandlerFunc {
 		c.Next()
 	}
 }
+
+/* OptionalAuth injects the user ID into the context if a valid token is present, but does not enforce it */
+func OptionalAuth() gin.HandlerFunc {
+	return func(c *gin.Context) {
+		tokenString, err := c.Cookie("access_token")
+		if err == nil {
+			if claims, err := utils.VerifyToken(tokenString); err == nil {
+				c.Set("user_id", claims.UserID)
+			}
+		}
+		c.Next()
+	}
+}

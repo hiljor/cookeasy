@@ -47,10 +47,14 @@ func SetupRouter() *gin.Engine {
 
 	// User routes
 	users := r.Group("/api/users")
-	users.Use(middleware.AuthRequired())
 	{
-		users.GET("/search", handlers.SearchUsers)
-		users.GET("/:username", handlers.GetUserByUsername)
+		users.GET("/:username", middleware.OptionalAuth(), handlers.GetUserByUsername)
+		
+		protected := users.Group("")
+		protected.Use(middleware.AuthRequired())
+		{
+			protected.GET("/search", handlers.SearchUsers)
+		}
 	}
 
 	// Social routes

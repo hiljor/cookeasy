@@ -87,6 +87,8 @@
       }
     },
     "profile": {
+      "privateTitle": "Denne kontoen er privat",
+      "privateDescription": "Følg denne kokken for å se oppskriftene deres og deres kulinariske reise.",
       "empty": {
         "recipes": {
           "title": "Ingen oppskrifter ennå",
