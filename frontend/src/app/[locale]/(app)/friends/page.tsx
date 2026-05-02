@@ -140,7 +140,7 @@ export default function FriendsPage() {
   return (
     <div className="max-w-4xl mx-auto p-4 sm:p-8">
       <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 mb-8">
-        <h1 className="text-3xl font-bold dark:text-white">{t("title")}</h1>
+        <h1 className="text-3xl font-bold text-foreground">{t("title")}</h1>
         <div className="flex gap-2 w-full sm:w-auto">
           <div className="relative flex-1 sm:w-64">
             <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted" />
@@ -267,7 +267,7 @@ export default function FriendsPage() {
                       <CardContent className="flex items-center gap-4 p-4">
                         <Avatar src={friend.profile_picture_url} fallback={friend.username} />
                         <div className="flex-1 min-w-0">
-                          <p className="font-semibold truncate dark:text-white">@{friend.username}</p>
+                          <p className="font-semibold truncate text-foreground">@{friend.username}</p>
                           <p className="text-xs text-zinc-500 dark:text-zinc-400 truncate">{friend.bio || "No bio"}</p>
                         </div>
                         <Button variant="ghost" size="sm" onClick={() => handleRemove(friend.id)}>
@@ -294,7 +294,7 @@ export default function FriendsPage() {
                       <CardContent className="flex items-center gap-4 p-4">
                         <Avatar src={req.sender.profile_picture_url} fallback={req.sender.username} />
                         <div className="flex-1 min-w-0">
-                          <p className="font-semibold truncate dark:text-white">@{req.sender.username}</p>
+                          <p className="font-semibold truncate text-foreground">@{req.sender.username}</p>
                           <p className="text-xs text-zinc-500 dark:text-zinc-400">{t("actions.wantsToBeFriend")}</p>
                         </div>
                         <div className="flex gap-2">

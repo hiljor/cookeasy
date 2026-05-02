@@ -93,11 +93,11 @@ export default function EditProfilePage() {
 
         <div className="pt-6 border-t border-border">
             <h2 className="text-lg font-semibold mb-4 text-foreground">{t("privacy")}</h2>
-            <div className="flex items-start gap-3 p-4 rounded-xl bg-zinc-50 dark:bg-zinc-900/50">
+            <div className="flex items-start gap-3 p-4 rounded-xl bg-card border border-border">
               <input 
                 type="checkbox" 
                 id="isPrivate"
-                className="mt-1 h-4 w-4 rounded border-zinc-300 text-primary focus:ring-primary"
+                className="mt-1 h-4 w-4 rounded border-[var(--color-border)] text-[var(--color-primary)] focus:ring-[var(--color-primary)] cursor-pointer"
                 checked={isPrivate}
                 onChange={(e) => setIsPrivate(e.target.checked)}
               />

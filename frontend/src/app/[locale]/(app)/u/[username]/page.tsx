@@ -68,7 +68,7 @@ export default function ProfilePage() {
           className="max-w-2xl mx-auto p-4 sm:p-8"
         >
           <div className="flex flex-col items-center sm:flex-row sm:items-start gap-6 mb-12">
-            <div className="w-32 h-32 rounded-full bg-gray-200 overflow-hidden flex-shrink-0 dark:bg-zinc-800">
+            <div className="w-32 h-32 rounded-full bg-card overflow-hidden flex-shrink-0 border border-border">
               {profile.profile_picture_url ? (
                 <img src={profile.profile_picture_url} alt={profile.username} className="w-full h-full object-cover" />
               ) : (
@@ -80,13 +80,13 @@ export default function ProfilePage() {
 
             <div className="flex-1 text-center sm:text-left">
               <div className="flex flex-col sm:flex-row sm:items-center gap-4 mb-4">
-                <h1 className="text-2xl font-bold dark:text-white flex items-center justify-center sm:justify-start gap-2">
+                <h1 className="text-2xl font-bold text-foreground flex items-center justify-center sm:justify-start gap-2">
                   @{profile.username}
                   {profile.is_private && <Lock className="h-4 w-4 text-muted" />}
                 </h1>
                 {isOwnProfile && (
                   <Link href="/settings/profile">
-                    <Button variant="outline" size="sm" className="dark:bg-zinc-900 dark:border-zinc-800">Edit Profile</Button>
+                    <Button variant="outline" size="sm">Edit Profile</Button>
                   </Link>
                 )}
               </div>
@@ -95,13 +95,13 @@ export default function ProfilePage() {
                 <>
                   <p className="text-gray-600 dark:text-zinc-400 mb-6">{profile.bio || "No bio yet."}</p>
                   
-                  <div className="flex justify-center sm:justify-start gap-8 border-t border-b py-4 dark:border-zinc-800">
+                  <div className="flex justify-center sm:justify-start gap-8 border-t border-b py-4 border-border">
                     <div className="text-center">
-                      <span className="block font-bold dark:text-white">0</span>
+                      <span className="block font-bold text-foreground">0</span>
                       <span className="text-sm text-gray-500 dark:text-zinc-400">Recipes</span>
                     </div>
                     <div className="text-center">
-                      <span className="block font-bold dark:text-white">0</span>
+                      <span className="block font-bold text-foreground">0</span>
                       <span className="text-sm text-gray-500 dark:text-zinc-400">Friends</span>
                     </div>
                   </div>
@@ -115,7 +115,7 @@ export default function ProfilePage() {
           </div>
 
           <div className="space-y-6">
-            <h2 className="text-xl font-bold dark:text-white">Recipes</h2>
+            <h2 className="text-xl font-bold text-foreground">Recipes</h2>
             {profile.is_private ? (
               <EmptyState 
                 icon={Lock}
