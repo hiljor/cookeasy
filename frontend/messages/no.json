@@ -12,7 +12,8 @@
     "nav": {
       "recipes": "Oppskrifter",
       "friends": "Venner",
-      "profile": "Profil"
+      "profile": "Logg inn",
+      "logout": "Logg ut"
     }
   },
   "Auth": {
@@ -108,6 +109,9 @@
       "username": "Brukernavn",
       "bio": "Bio",
       "bioPlaceholder": "Fortell oss om din kulinariske reise...",
+      "privacy": "Personvern",
+      "isPrivate": "Privat konto",
+      "privacyDescription": "Når kontoen din er privat, kan bare venner se din bio og dine oppskrifter. Andre vil bare se ditt brukernavn og profilbilde.",
       "appearance": "Utseende",
       "save": "Lagre endringer",
       "cancel": "Avbryt",

@@ -30,8 +30,9 @@ func GetMe(c *gin.Context) {
 
 /* UpdateProfileRequest defines the allowed fields for profile updates */
 type UpdateProfileRequest struct {
-	Username string  `json:"username" binding:"omitempty,min=3,max=20,alphanum"`
-	Bio      *string `json:"bio" binding:"omitempty,max=500"`
+	Username  string  `json:"username" binding:"omitempty,min=3,max=20,alphanum"`
+	Bio       *string `json:"bio" binding:"omitempty,max=500"`
+	IsPrivate *bool   `json:"is_private"`
 }
 
 /* UpdateMe updates the currently authenticated user's profile information */
@@ -61,6 +62,10 @@ func UpdateMe(c *gin.Context) {
 
 	if req.Bio != nil {
 		user.Bio = req.Bio
+	}
+
+	if req.IsPrivate != nil {
+		user.IsPrivate = *req.IsPrivate
 	}
 
 	if err := database.DB.Save(&user).Error; err != nil {

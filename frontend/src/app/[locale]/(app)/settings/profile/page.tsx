@@ -15,6 +15,7 @@ export default function EditProfilePage() {
   const router = useRouter();
   const [username, setUsername] = useState("");
   const [bio, setBio] = useState("");
+  const [isPrivate, setIsPrivate] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [message, setMessage] = useState({ type: "", text: "" });
 
@@ -22,6 +23,7 @@ export default function EditProfilePage() {
     if (user) {
       setUsername(user.username);
       setBio(user.bio || "");
+      setIsPrivate(user.is_private || false);
     }
   }, [user]);
 
@@ -34,7 +36,7 @@ export default function EditProfilePage() {
       const response = await fetch("/api/auth/me", {
         method: "PUT",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ username, bio }),
+        body: JSON.stringify({ username, bio, is_private: isPrivate }),
       });
 
       if (!response.ok) {
@@ -87,6 +89,27 @@ export default function EditProfilePage() {
             placeholder={t("bioPlaceholder")}
           />
           <p className="text-xs text-muted mt-1 text-right">{bio.length}/500</p>
+        </div>
+
+        <div className="pt-6 border-t border-border">
+            <h2 className="text-lg font-semibold mb-4 text-foreground">{t("privacy")}</h2>
+            <div className="flex items-start gap-3 p-4 rounded-xl bg-zinc-50 dark:bg-zinc-900/50">
+              <input 
+                type="checkbox" 
+                id="isPrivate"
+                className="mt-1 h-4 w-4 rounded border-zinc-300 text-primary focus:ring-primary"
+                checked={isPrivate}
+                onChange={(e) => setIsPrivate(e.target.checked)}
+              />
+              <div>
+                <label htmlFor="isPrivate" className="block text-sm font-semibold text-foreground cursor-pointer">
+                  {t("isPrivate")}
+                </label>
+                <p className="text-xs text-muted leading-relaxed mt-1">
+                  {t("privacyDescription")}
+                </p>
+              </div>
+            </div>
         </div>
 
         <div className="pt-6 border-t border-border">

@@ -12,7 +12,8 @@
     "nav": {
       "recipes": "Recipes",
       "friends": "Friends",
-      "profile": "Profile"
+      "profile": "Log In",
+      "logout": "Log Out"
     }
   },
   "Auth": {
@@ -108,6 +109,9 @@
       "username": "Username",
       "bio": "Bio",
       "bioPlaceholder": "Tell us about your cooking journey...",
+      "privacy": "Privacy",
+      "isPrivate": "Private Account",
+      "privacyDescription": "When your account is private, only friends can see your bio and recipes. Others will only see your username and profile picture.",
       "appearance": "Appearance",
       "save": "Save Changes",
       "cancel": "Cancel",
