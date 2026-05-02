@@ -34,7 +34,24 @@
       "submit": "Create Account",
       "haveAccount": "Already have an account?",
       "loginLink": "Login here",
-      "success": "Registration successful! Please check your email for verification."
+      "success": "Registration successful! Please check your email for verification.",
+      "errors": {
+        "invalid_input": "Invalid input data provided.",
+        "password_weak": "Password must contain at least one number and one special character.",
+        "user_exists": "Username or email already exists.",
+        "server_error": "An internal server error occurred. Please try again later.",
+        "token_required": "Verification token is required.",
+        "invalid_token": "Invalid or expired verification token.",
+        "registration_success": "User registered successfully. Please verify your email.",
+        "email_verified": "Email verified successfully."
+      }
+    },
+    "verify": {
+      "title": "Account Verification",
+      "verifying": "Verifying your account...",
+      "success": "Your account has been successfully verified!",
+      "error": "Verification failed. The link might be invalid or expired.",
+      "loginLink": "Go to Login"
     }
   },
   "Social": {

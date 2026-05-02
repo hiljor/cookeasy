@@ -34,7 +34,24 @@
       "submit": "Opprett konto",
       "haveAccount": "Har du allerede en konto?",
       "loginLink": "Logg inn her",
-      "success": "Registreringen var vellykket! Vennligst sjekk e-posten din for bekreftelse."
+      "success": "Registreringen var vellykket! Vennligst sjekk e-posten din for bekreftelse.",
+      "errors": {
+        "invalid_input": "Ugyldige inndata oppgitt.",
+        "password_weak": "Passordet må inneholde minst ett tall og ett spesialtegn.",
+        "user_exists": "Brukernavn eller e-post finnes allerede.",
+        "server_error": "En intern serverfeil oppstod. Prøv igjen senere.",
+        "token_required": "Bekreftelsestoken er påkrevd.",
+        "invalid_token": "Ugyldig eller utløpt bekreftelsestoken.",
+        "registration_success": "Bruker registrert vellykket. Vennligst bekreft e-posten din.",
+        "email_verified": "E-post bekreftet vellykket."
+      }
+    },
+    "verify": {
+      "title": "Kontoverifisering",
+      "verifying": "Verifiserer kontoen din...",
+      "success": "Kontoen din er nå bekreftet!",
+      "error": "Verifisering mislyktes. Lenken kan være ugyldig eller utløpt.",
+      "loginLink": "Gå til logg inn"
     }
   },
   "Social": {

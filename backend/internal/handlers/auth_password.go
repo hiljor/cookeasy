@@ -34,7 +34,7 @@ func ForgotPassword(c *gin.Context) {
 	resetToken := uuid.New().String()
 	expiry := time.Now().Add(1 * time.Hour)
 
-	user.ResetToken = resetToken
+	user.ResetToken = &resetToken
 	user.ResetTokenExpires = &expiry
 	database.DB.Save(&user)
 
@@ -80,7 +80,7 @@ func ResetPassword(c *gin.Context) {
 	}
 
 	user.Password = hashedPassword
-	user.ResetToken = ""
+	user.ResetToken = nil
 	user.ResetTokenExpires = nil
 	database.DB.Save(&user)
 

@@ -36,7 +36,7 @@ func TestGetMe_Success(t *testing.T) {
 	var response map[string]interface{}
 	json.Unmarshal(w.Body.Bytes(), &response)
 	assert.Equal(t, "testuser", response["username"])
-	
+
 	settings := response["settings"].(map[string]interface{})
 	assert.Equal(t, "midnight", settings["theme"])
 }
@@ -122,9 +122,12 @@ func TestSearchUsers_Success(t *testing.T) {
 	r := setupTestRouter()
 
 	currentUserID, _ := uuid.Parse("550e8400-e29b-41d4-a716-446655440001")
-	user1 := models.User{ID: currentUserID, Username: "searcher", Email: "searcher@ex.com", VerificationToken: "v1", ResetToken: "r1"}
-	user2 := models.User{Username: "chef_mario", Email: "mario@ex.com", VerificationToken: "v2", ResetToken: "r2"}
-	user3 := models.User{Username: "chef_luigi", Email: "luigi@ex.com", VerificationToken: "v3", ResetToken: "r3"}
+	r1 := "r1"
+	r2 := "r2"
+	r3 := "r3"
+	user1 := models.User{ID: currentUserID, Username: "searcher", Email: "searcher@ex.com", VerificationToken: "v1", ResetToken: &r1}
+	user2 := models.User{Username: "chef_mario", Email: "mario@ex.com", VerificationToken: "v2", ResetToken: &r2}
+	user3 := models.User{Username: "chef_luigi", Email: "luigi@ex.com", VerificationToken: "v3", ResetToken: &r3}
 	database.DB.Create(&user1)
 	database.DB.Create(&user2)
 	database.DB.Create(&user3)
@@ -140,9 +143,50 @@ func TestSearchUsers_Success(t *testing.T) {
 
 	var results []map[string]interface{}
 	json.Unmarshal(w.Body.Bytes(), &results)
-	
+
 	assert.Len(t, results, 2) // mario and luigi
 	assert.Equal(t, "chef_mario", results[0]["username"])
 	// Verify email is not loaded (should be zero value in JSON)
 	assert.Equal(t, "", results[0]["email"])
+}
+
+func TestGetUserByUsername_Success(t *testing.T) {
+	r := setupTestRouter()
+
+	bio := "I have a bio"
+	user := models.User{
+		Username: "chef_special",
+		Email:    "special@example.com",
+		Bio:      &bio,
+	}
+	database.DB.Create(&user)
+
+	// We need to be authenticated to access /api/users
+	token, _ := utils.GenerateAccessToken(uuid.New())
+
+	req, _ := http.NewRequest("GET", "/api/users/chef_special", nil)
+	req.AddCookie(&http.Cookie{Name: "access_token", Value: token})
+	w := httptest.NewRecorder()
+	r.ServeHTTP(w, req)
+
+	assert.Equal(t, http.StatusOK, w.Code)
+
+	var response map[string]interface{}
+	json.Unmarshal(w.Body.Bytes(), &response)
+	assert.Equal(t, "chef_special", response["username"])
+	assert.Equal(t, "I have a bio", response["bio"])
+	// Email should be empty string (zero value for unselected string field)
+	assert.Equal(t, "", response["email"])
+}
+
+func TestGetUserByUsername_NotFound(t *testing.T) {
+	r := setupTestRouter()
+	token, _ := utils.GenerateAccessToken(uuid.New())
+
+	req, _ := http.NewRequest("GET", "/api/users/nonexistent", nil)
+	req.AddCookie(&http.Cookie{Name: "access_token", Value: token})
+	w := httptest.NewRecorder()
+	r.ServeHTTP(w, req)
+
+	assert.Equal(t, http.StatusNotFound, w.Code)
 }

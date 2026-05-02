@@ -17,7 +17,7 @@ export default function RegisterPage() {
   const [isLoading, setIsLoading] = useState(false);
   const [success, setSuccess] = useState(false);
 
-  const handleSubmit = async (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.SubmitEvent) => {
     e.preventDefault();
     setIsLoading(true);
 
@@ -28,15 +28,22 @@ export default function RegisterPage() {
         body: JSON.stringify({ username, email, password }),
       });
 
+      let data;
+      try {
+        data = await response.json();
+      } catch {
+        // If JSON parsing fails, treat as server error
+        throw new Error("server_error");
+      }
+
       if (!response.ok) {
-        const data = await response.json();
-        throw new Error(data.error || "Something went wrong");
+        throw new Error(data.error || "server_error");
       }
 
       toast.success(t("success"));
       setSuccess(true);
     } catch (err: any) {
-      toast.error(err.message);
+      toast.error(t(`errors.${err.message}`));
     } finally {
       setIsLoading(false);
     }

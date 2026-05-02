@@ -23,25 +23,25 @@ type RegisterRequest struct {
 func Register(c *gin.Context) {
 	var req RegisterRequest
 	if err := c.ShouldBindJSON(&req); err != nil {
-		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+		c.JSON(http.StatusBadRequest, gin.H{"error": "invalid_input"})
 		return
 	}
 
 	// Validate password complexity (at least one number and one special character)
 	if !validatePassword(req.Password) {
-		c.JSON(http.StatusBadRequest, gin.H{"error": "Password must contain at least one number and one special character"})
+		c.JSON(http.StatusBadRequest, gin.H{"error": "password_weak"})
 		return
 	}
 
 	var existingUser models.User
 	if err := database.DB.Where("username = ? OR email = ?", req.Username, req.Email).First(&existingUser).Error; err == nil {
-		c.JSON(http.StatusConflict, gin.H{"error": "Username or email already exists"})
+		c.JSON(http.StatusConflict, gin.H{"error": "user_exists"})
 		return
 	}
 
 	hashedPassword, err := utils.HashPassword(req.Password)
 	if err != nil {
-		c.JSON(http.StatusInternalServerError, gin.H{"error": "Failed to hash password"})
+		c.JSON(http.StatusInternalServerError, gin.H{"error": "server_error"})
 		return
 	}
 
@@ -62,7 +62,7 @@ func Register(c *gin.Context) {
 	}
 
 	if err := database.DB.Create(&user).Error; err != nil {
-		c.JSON(http.StatusInternalServerError, gin.H{"error": "Failed to create user"})
+		c.JSON(http.StatusInternalServerError, gin.H{"error": "server_error"})
 		return
 	}
 
@@ -74,7 +74,7 @@ func Register(c *gin.Context) {
 	}()
 
 	c.JSON(http.StatusCreated, gin.H{
-		"message": "User registered successfully. Please verify your email.",
+		"message": "registration_success",
 		"user":    user,
 	})
 }
@@ -83,13 +83,13 @@ func Register(c *gin.Context) {
 func VerifyEmail(c *gin.Context) {
 	token := c.Query("token")
 	if token == "" {
-		c.JSON(http.StatusBadRequest, gin.H{"error": "Verification token is required"})
+		c.JSON(http.StatusBadRequest, gin.H{"error": "token_required"})
 		return
 	}
 
 	var user models.User
 	if err := database.DB.Where("verification_token = ?", token).First(&user).Error; err != nil {
-		c.JSON(http.StatusBadRequest, gin.H{"error": "Invalid or expired verification token"})
+		c.JSON(http.StatusBadRequest, gin.H{"error": "invalid_token"})
 		return
 	}
 
@@ -97,7 +97,7 @@ func VerifyEmail(c *gin.Context) {
 	user.VerificationToken = ""
 	database.DB.Save(&user)
 
-	c.JSON(http.StatusOK, gin.H{"message": "Email verified successfully"})
+	c.JSON(http.StatusOK, gin.H{"message": "email_verified"})
 }
 
 func validatePassword(password string) bool {

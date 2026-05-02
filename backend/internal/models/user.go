@@ -17,7 +17,7 @@ type User struct {
 	ProfilePictureURL *string        `json:"profile_picture_url"`
 	IsVerified        bool           `gorm:"default:false" json:"is_verified"`
 	VerificationToken string         `gorm:"uniqueIndex" json:"-"`
-	ResetToken        string         `gorm:"uniqueIndex" json:"-"`
+	ResetToken        *string        `gorm:"uniqueIndex" json:"-"`
 	ResetTokenExpires *time.Time     `json:"-"`
 	CreatedAt         time.Time      `json:"created_at"`
 	UpdatedAt         time.Time      `json:"updated_at"`

@@ -50,6 +50,7 @@ func SetupRouter() *gin.Engine {
 	users.Use(middleware.AuthRequired())
 	{
 		users.GET("/search", handlers.SearchUsers)
+		users.GET("/:username", handlers.GetUserByUsername)
 	}
 
 	// Social routes

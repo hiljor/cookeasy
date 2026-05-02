@@ -62,3 +62,18 @@ func SearchUsers(c *gin.Context) {
 
 	c.JSON(http.StatusOK, users)
 }
+
+/* GetUserByUsername retrieves a user profile by their unique username */
+func GetUserByUsername(c *gin.Context) {
+	username := c.Param("username")
+
+	var user models.User
+	if err := database.DB.Select("id, username, bio, profile_picture_url, created_at").
+		Where("username = ?", username).
+		First(&user).Error; err != nil {
+		c.JSON(http.StatusNotFound, gin.H{"error": "user_not_found"})
+		return
+	}
+
+	c.JSON(http.StatusOK, user)
+}
