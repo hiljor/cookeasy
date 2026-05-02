@@ -10,6 +10,8 @@ import { Avatar } from "@/components/ui/display/Avatar";
 import { Badge } from "@/components/ui/display/Badge";
 import { EmptyState } from "@/components/ui/display/EmptyState";
 import { Input } from "@/components/ui/form/Input";
+import { UserCardSkeleton } from "@/components/ui/display/Skeleton";
+import { motion, AnimatePresence } from "framer-motion";
 
 interface Friend {
   id: string;
@@ -152,40 +154,58 @@ export default function FriendsPage() {
         </div>
       </div>
 
-      {searchQuery.trim().length >= 2 ? (
-        <div className="mb-12">
-            <h2 className="text-sm font-semibold text-muted uppercase tracking-wider mb-4">
-                {isSearching ? t("loading") : t("findUsers")}
-            </h2>
-            <div className="grid gap-4 sm:grid-cols-2">
-                {searchResults.length === 0 && !isSearching ? (
-                    <div className="sm:col-span-2 text-center py-8 text-muted border-2 border-dashed border-border rounded-xl">
-                        {t("noResults", { query: searchQuery })}
-                    </div>
-                ) : (
-                    searchResults.map((user) => (
-                        <Card key={user.id} className="border-primary/20">
-                            <CardContent className="flex items-center gap-4 p-4">
-                                <Avatar src={user.profile_picture_url} fallback={user.username} />
-                                <div className="flex-1 min-w-0">
-                                    <p className="font-semibold truncate">@{user.username}</p>
-                                    <p className="text-xs text-muted truncate">{user.bio || "No bio"}</p>
-                                </div>
-                                {isFriend(user.id) ? (
-                                    <Badge variant="outline" className="text-[10px]">{t("actions.alreadyFriends")}</Badge>
-                                ) : (
-                                    <Button size="sm" variant="outline" className="h-8" onClick={() => handleSendRequest(user.id)}>
-                                        <UserPlus className="h-3 w-3 mr-1" /> {t("actions.addFriend")}
-                                    </Button>
-                                )}
-                            </CardContent>
-                        </Card>
-                    ))
-                )}
-            </div>
-            <div className="mt-8 border-b border-border" />
-        </div>
-      ) : null}
+      <AnimatePresence mode="popLayout">
+        {searchQuery.trim().length >= 2 && (
+          <motion.div 
+            initial={{ opacity: 0, height: 0 }}
+            animate={{ opacity: 1, height: "auto" }}
+            exit={{ opacity: 0, height: 0 }}
+            className="mb-12 overflow-hidden"
+          >
+              <h2 className="text-sm font-semibold text-muted uppercase tracking-wider mb-4">
+                  {isSearching ? t("loading") : t("findUsers")}
+              </h2>
+              <div className="grid gap-4 sm:grid-cols-2">
+                  {isSearching ? (
+                    <>
+                      <UserCardSkeleton key="s1" />
+                      <UserCardSkeleton key="s2" />
+                    </>
+                  ) : searchResults.length === 0 ? (
+                      <div className="sm:col-span-2 text-center py-8 text-muted border-2 border-dashed border-border rounded-xl">
+                          {t("noResults", { query: searchQuery })}
+                      </div>
+                  ) : (
+                      searchResults.map((user) => (
+                          <motion.div
+                            key={user.id}
+                            initial={{ opacity: 0, scale: 0.95 }}
+                            animate={{ opacity: 1, scale: 1 }}
+                          >
+                            <Card className="border-primary/20">
+                                <CardContent className="flex items-center gap-4 p-4">
+                                    <Avatar src={user.profile_picture_url} fallback={user.username} />
+                                    <div className="flex-1 min-w-0">
+                                        <p className="font-semibold truncate">@{user.username}</p>
+                                        <p className="text-xs text-muted truncate">{user.bio || "No bio"}</p>
+                                    </div>
+                                    {isFriend(user.id) ? (
+                                        <Badge variant="outline" className="text-[10px]">{t("actions.alreadyFriends")}</Badge>
+                                    ) : (
+                                        <Button size="sm" variant="outline" className="h-8" onClick={() => handleSendRequest(user.id)}>
+                                            <UserPlus className="h-3 w-3 mr-1" /> {t("actions.addFriend")}
+                                        </Button>
+                                    )}
+                                </CardContent>
+                            </Card>
+                          </motion.div>
+                      ))
+                  )}
+              </div>
+              <div className="mt-8 border-b border-border" />
+          </motion.div>
+        )}
+      </AnimatePresence>
 
       <div className="flex gap-4 border-b border-border mb-6 overflow-x-auto">
         <button 
@@ -205,76 +225,95 @@ export default function FriendsPage() {
         </button>
       </div>
 
-      {isLoading ? (
-        <div className="text-center py-12 text-zinc-500 dark:text-zinc-400">{t("loading")}</div>
-      ) : (
-        <>
-          {activeTab === "all" && (
-            <div className="grid gap-4 sm:grid-cols-2">
-              {friends.length === 0 ? (
-                <div className="sm:col-span-2">
-                  <EmptyState 
-                    icon={Users}
-                    title={t("empty.friends.title")}
-                    description={t("empty.friends.description")}
-                    action={{
-                      label: t("findUsers"),
-                      onClick: () => console.log("Find users clicked")
-                    }}
-                  />
-                </div>
-              ) : (
-                friends.map((friend) => (
-                  <Card key={friend.id} className="dark:bg-zinc-900 dark:border-zinc-800">
-                    <CardContent className="flex items-center gap-4 p-4">
-                      <Avatar src={friend.profile_picture_url} fallback={friend.username} />
-                      <div className="flex-1 min-w-0">
-                        <p className="font-semibold truncate dark:text-white">@{friend.username}</p>
-                        <p className="text-xs text-zinc-500 dark:text-zinc-400 truncate">{friend.bio || "No bio"}</p>
-                      </div>
-                      <Button variant="ghost" size="sm" onClick={() => handleRemove(friend.id)}>
-                        <UserMinus className="w-4 h-4 text-zinc-400 hover:text-red-500 transition-colors" />
-                      </Button>
-                    </CardContent>
-                  </Card>
-                ))
-              )}
-            </div>
-          )}
+      <AnimatePresence mode="wait">
+        {isLoading ? (
+          <motion.div 
+            key="loading"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            className="grid gap-4 sm:grid-cols-2"
+          >
+            <UserCardSkeleton />
+            <UserCardSkeleton />
+            <UserCardSkeleton />
+            <UserCardSkeleton />
+          </motion.div>
+        ) : (
+          <motion.div
+            key={activeTab}
+            initial={{ opacity: 0, x: 10 }}
+            animate={{ opacity: 1, x: 0 }}
+            exit={{ opacity: 0, x: -10 }}
+            transition={{ duration: 0.2 }}
+          >
+            {activeTab === "all" && (
+              <div className="grid gap-4 sm:grid-cols-2">
+                {friends.length === 0 ? (
+                  <div className="sm:col-span-2">
+                    <EmptyState 
+                      icon={Users}
+                      title={t("empty.friends.title")}
+                      description={t("empty.friends.description")}
+                      action={{
+                        label: t("findUsers"),
+                        onClick: () => console.log("Find users clicked")
+                      }}
+                    />
+                  </div>
+                ) : (
+                  friends.map((friend) => (
+                    <Card key={friend.id} className="dark:bg-zinc-900 dark:border-zinc-800">
+                      <CardContent className="flex items-center gap-4 p-4">
+                        <Avatar src={friend.profile_picture_url} fallback={friend.username} />
+                        <div className="flex-1 min-w-0">
+                          <p className="font-semibold truncate dark:text-white">@{friend.username}</p>
+                          <p className="text-xs text-zinc-500 dark:text-zinc-400 truncate">{friend.bio || "No bio"}</p>
+                        </div>
+                        <Button variant="ghost" size="sm" onClick={() => handleRemove(friend.id)}>
+                          <UserMinus className="w-4 h-4 text-zinc-400 hover:text-red-500 transition-colors" />
+                        </Button>
+                      </CardContent>
+                    </Card>
+                  ))
+                )}
+              </div>
+            )}
 
-          {activeTab === "requests" && (
-            <div className="grid gap-4">
-              {requests.length === 0 ? (
-                <EmptyState 
-                  icon={Inbox}
-                  title={t("empty.requests.title")}
-                  description={t("empty.requests.description")}
-                />
-              ) : (
-                requests.map((req) => (
-                  <Card key={req.id} className="dark:bg-zinc-900 dark:border-zinc-800">
-                    <CardContent className="flex items-center gap-4 p-4">
-                      <Avatar src={req.sender.profile_picture_url} fallback={req.sender.username} />
-                      <div className="flex-1 min-w-0">
-                        <p className="font-semibold truncate dark:text-white">@{req.sender.username}</p>
-                        <p className="text-xs text-zinc-500 dark:text-zinc-400">{t("actions.wantsToBeFriend")}</p>
-                      </div>
-                      <div className="flex gap-2">
-                        <Button size="sm" className="bg-green-600 hover:bg-green-700 text-white" onClick={() => handleRespond(req.id, "accepted")}>
-                          <Check className="w-4 h-4" />
-                        </Button>
-                        <Button variant="outline" size="sm" className="border-red-200 text-red-600 hover:bg-red-50 dark:border-red-900/30 dark:text-red-400 dark:hover:bg-red-900/10" onClick={() => handleRespond(req.id, "rejected")}>
-                          <X className="w-4 h-4" />
-                        </Button>
-                      </div>
-                    </CardContent>
-                  </Card>
-                ))
-              )}
-            </div>
-          )}
-        </>
-      )}
+            {activeTab === "requests" && (
+              <div className="grid gap-4">
+                {requests.length === 0 ? (
+                  <EmptyState 
+                    icon={Inbox}
+                    title={t("empty.requests.title")}
+                    description={t("empty.requests.description")}
+                  />
+                ) : (
+                  requests.map((req) => (
+                    <Card key={req.id} className="dark:bg-zinc-900 dark:border-zinc-800">
+                      <CardContent className="flex items-center gap-4 p-4">
+                        <Avatar src={req.sender.profile_picture_url} fallback={req.sender.username} />
+                        <div className="flex-1 min-w-0">
+                          <p className="font-semibold truncate dark:text-white">@{req.sender.username}</p>
+                          <p className="text-xs text-zinc-500 dark:text-zinc-400">{t("actions.wantsToBeFriend")}</p>
+                        </div>
+                        <div className="flex gap-2">
+                          <Button size="sm" className="bg-green-600 hover:bg-green-700 text-white" onClick={() => handleRespond(req.id, "accepted")}>
+                            <Check className="w-4 h-4" />
+                          </Button>
+                          <Button variant="outline" size="sm" className="border-red-200 text-red-600 hover:bg-red-50 dark:border-red-900/30 dark:text-red-400 dark:hover:bg-red-900/10" onClick={() => handleRespond(req.id, "rejected")}>
+                            <X className="w-4 h-4" />
+                          </Button>
+                        </div>
+                      </CardContent>
+                    </Card>
+                  ))
+                )}
+              </div>
+            )}
+          </motion.div>
+        )}
+      </AnimatePresence>
     </div>
   );
 }

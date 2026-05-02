@@ -25,7 +25,7 @@ export default function EditProfilePage() {
     }
   }, [user]);
 
-  const handleSubmit = async (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.SubmitEvent) => {
     e.preventDefault();
     setIsLoading(true);
     setMessage({ type: "", text: "" });
