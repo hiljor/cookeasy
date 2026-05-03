@@ -51,7 +51,7 @@ func Login(c *gin.Context) {
 	refreshToken := models.RefreshToken{
 		UserID:    user.ID,
 		Token:     refreshTokenString,
-		ExpiresAt: time.Now().Add(7 * 24 * time.Hour),
+		ExpiresAt: time.Now().Add(30 * 24 * time.Hour),
 	}
 
 	if err := database.DB.Create(&refreshToken).Error; err != nil {
@@ -109,7 +109,7 @@ func Refresh(c *gin.Context) {
 	newRefreshTokenString := utils.GenerateRefreshToken()
 
 	storedToken.Token = newRefreshTokenString
-	storedToken.ExpiresAt = time.Now().Add(7 * 24 * time.Hour)
+	storedToken.ExpiresAt = time.Now().Add(30 * 24 * time.Hour)
 	database.DB.Save(&storedToken)
 
 	setTokenCookies(c, newAccessToken, newRefreshTokenString)
@@ -121,5 +121,5 @@ func setTokenCookies(c *gin.Context, access, refresh string) {
 	secure := os.Getenv("APP_ENV") == "production"
 
 	c.SetCookie("access_token", access, 900, "/", "", secure, true)
-	c.SetCookie("refresh_token", refresh, 604800, "/", "", secure, true)
+	c.SetCookie("refresh_token", refresh, 30*24*60*60, "/", "", secure, true)
 }

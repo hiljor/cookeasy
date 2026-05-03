@@ -54,22 +54,23 @@ We will implement the project using a **vertically sliced approach** after the c
 - [x] **2.9 Auth & User Testing**: Write relevant tests for registration, login, profile management, and theme switching.
 
 ### Phase 3: Social Graph & Collaboration
-- [ ] **3.1 Friend System Completion**:
+### Phase 3: Social Graph & Collaboration
+- [x] **3.1 Friend System Completion**:
     - [x] **3.1.1 User Search API**: Implement `GET /api/users/search?q=...` to find users by username.
     - [x] **3.1.2 User Search UI**: Implement a "Find Users" search component.
     - [x] **3.1.3 Profile Integration**: Add Friend/Remove Friend action buttons to public profile pages (`/u/[username]`).
     - [x] **3.1.4 Friends Popup**: Replace the "Friends" counter on the profile page with a button that opens a popup modal listing friends and providing an "Add Friend" interface.
-- [ ] **3.2 Social Polish & Notifications**:
-    - [ ] **3.2.1 Notification Center**: Navbar indicator for pending social actions that acts as a button to open a detailed modal, supporting future extensions like "post liked" notifications.
-    - [ ] **3.2.2 Optimistic UI**: Implement React state updates for social actions.
-    - [ ] **3.2.3 Toast Feedback**: Standardize notifications for social interactions.
-- [ ] **3.3 Social Testing**:
-    - [ ] **3.3.1 Backend Handlers**: Write comprehensive unit tests for `social.go` handlers.
-    - [ ] **3.3.2 Frontend Components**: Write Vitest tests for the Friends popup, Search, and Profile interaction.
+- [x] **3.2 Social Polish & Notifications**:
+    - [x] **3.2.1 Notification Center**: Navbar indicator for pending social actions that acts as a button to open a detailed modal, supporting future extensions like "post liked" notifications.
+    - [x] **3.2.2 Optimistic UI**: Implement React state updates for social actions.
+    - [x] **3.2.3 Toast Feedback**: Standardize notifications for social interactions.
+- [x] **3.3 Social Testing**:
+    - [x] **3.3.1 Backend Handlers**: Write comprehensive unit tests for `social.go` handlers.
+    - [x] **3.3.2 Frontend Components**: Write Vitest tests for the Friends popup, Search, and Profile interaction.
 
 ### Phase 4: Recipe System (The Core)
-- [ ] **4.1 Recipe Models**: Implement `Recipe`, `Ingredient`, and `Tag` models.
-- [ ] **4.2 Creation Flow**: Multi-step frontend form with structured ingredient input.
+- [x] **4.1 Recipe Models**: Implement `Recipe`, `Ingredient`, and `Tag` models.
+- [x] **4.2 Creation Flow**: Multi-step frontend form with structured ingredient input.
 - [ ] **4.3 Media**: Cloudinary integration for recipe images with 5MB/WebP constraints.
 - [ ] **4.4 Scaling Logic**: Frontend utility and UI to dynamically recalculate ingredient amounts.
 - [ ] **4.5 Recipe View**: Detailed recipe page with scaling and printing support.

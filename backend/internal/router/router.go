@@ -68,5 +68,12 @@ func SetupRouter() *gin.Engine {
 		social.DELETE("/friends/:id", handlers.RemoveFriend)
 	}
 
+	// Recipe routes
+	recipes := r.Group("/api/recipes")
+	recipes.Use(middleware.AuthRequired())
+	{
+		recipes.POST("/", handlers.CreateRecipe)
+	}
+
 	return r
 }

@@ -133,5 +133,26 @@
   "Notifications": {
     "title": "Notifications",
     "noNotifications": "No new notifications."
+  },
+  "Recipes": {
+    "create": {
+      "title": "Create Recipe",
+      "submit": "Publish Recipe",
+      "visibility": {
+        "public": "Public",
+        "private": "Private"
+      },
+      "fields": {
+        "title": "Recipe Title",
+        "description": "Write a short description...",
+        "ingredients": "Ingredients",
+        "steps": "Steps",
+        "addIngredient": "Add Ingredient",
+        "addStep": "Add Step",
+        "qty": "Qty",
+        "unit": "Unit",
+        "ingredientPlaceholder": "Ingredient"
+      }
+    }
   }
 }

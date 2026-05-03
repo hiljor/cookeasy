@@ -133,5 +133,26 @@
   "Notifications": {
     "title": "Varsler",
     "noNotifications": "Ingen nye varsler."
+  },
+  "Recipes": {
+    "create": {
+      "title": "Opprett oppskrift",
+      "submit": "Publiser oppskrift",
+      "visibility": {
+        "public": "Offentlig",
+        "private": "Privat"
+      },
+      "fields": {
+        "title": "Oppskriftstittel",
+        "description": "Skriv en kort beskrivelse...",
+        "ingredients": "Ingredienser",
+        "steps": "Instruksjoner",
+        "addIngredient": "Legg til ingrediens",
+        "addStep": "Legg til steg",
+        "qty": "Ant",
+        "unit": "Enh",
+        "ingredientPlaceholder": "Ingrediens"
+      }
+    }
   }
 }

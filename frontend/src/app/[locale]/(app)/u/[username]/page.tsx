@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { useParams } from "next/navigation";
+import { useParams, useRouter } from "next/navigation";
 import { useAuth } from "@/context/AuthContext";
 import { Button } from "@/components/ui/form/Button";
 import Link from "next/link";
@@ -12,6 +12,7 @@ import { ProfileSkeleton } from "@/components/ui/display/Skeleton";
 import { Modal } from "@/components/ui/display/Modal";
 import { Avatar } from "@/components/ui/display/Avatar";
 import { motion, AnimatePresence } from "framer-motion";
+import { toast } from "sonner";
 
 interface UserProfile {
   id: string;
@@ -23,6 +24,7 @@ interface UserProfile {
 }
 
 export default function ProfilePage() {
+  const router = useRouter();
   const { username } = useParams();
   const { user: currentUser } = useAuth();
   const [profile, setProfile] = useState<UserProfile | null>(null);
@@ -188,11 +190,11 @@ export default function ProfilePage() {
                   </Link>
                 ) : currentUser && (
                   friendStatus === 'friends' ? (
-                    <Button variant="destructive" size="sm" onClick={handleRemoveFriend}>Remove Friend</Button>
+                    <Button variant="secondary" size="sm" onClick={handleRemoveFriend}>Remove Friend</Button>
                   ) : friendStatus === 'pending' ? (
                     <Button variant="outline" size="sm" disabled>Pending</Button>
                   ) : (
-                    <Button variant="default" size="sm" onClick={handleAddCurrentProfileFriend}>Add Friend</Button>
+                    <Button variant="primary" size="sm" onClick={handleAddCurrentProfileFriend}>Add Friend</Button>
                   )
                 )}
               </div>
@@ -238,7 +240,7 @@ export default function ProfilePage() {
               description={isOwnProfile ? t("empty.ownRecipes.description") : t("empty.recipes.description")}
               action={isOwnProfile ? {
                 label: t("empty.ownRecipes.createRecipe"),
-                onClick: () => console.log("Create recipe clicked")
+                onClick: () => router.push("/recipes/create")
               } : undefined}
               />            )}
           </div>
@@ -267,7 +269,7 @@ export default function ProfilePage() {
                       {searchResults.map((user) => (
                         <div key={user.id} className="flex items-center justify-between p-2 rounded hover:bg-border/20">
                           <div className="flex items-center gap-2">
-                            <Avatar src={user.profile_picture_url} username={user.username} />
+                            <Avatar src={user.profile_picture_url} fallback={user.username} />
                             <span className="text-sm font-medium">{user.username}</span>
                           </div>
                           <Button size="sm" variant="outline" onClick={() => handleAddFriend(user.id)}>Add</Button>
@@ -285,7 +287,7 @@ export default function ProfilePage() {
                 ) : (
                   friendsList.map((friend) => (
                     <div key={friend.id} className="flex items-center gap-3 p-2">
-                      <Avatar src={friend.profile_picture_url} username={friend.username} />
+                      <Avatar src={friend.profile_picture_url} fallback={friend.username} />
                       <span className="font-medium text-foreground">{friend.username}</span>
                     </div>
                   ))
