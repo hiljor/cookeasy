@@ -83,6 +83,7 @@ describe('Navbar Component', () => {
     render(<Navbar />);
     
     const recipesLink = screen.getByText('Recipes');
-    expect(recipesLink).toHaveClass('text-primary-dark');
+    expect(recipesLink).toHaveClass('text-primary-foreground');
+    expect(recipesLink).toHaveClass('underline');
   });
 });
