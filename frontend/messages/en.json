@@ -14,6 +14,9 @@
       "friends": "Friends",
       "profile": "Log In",
       "logout": "Log Out"
+    },
+    "search": {
+      "placeholder": "Search recipes..."
     }
   },
   "Auth": {

@@ -53,6 +53,14 @@ export default function Navbar() {
             </div>
           </div>
 
+          <div className="hidden md:flex flex-1 max-w-md mx-8">
+            <input
+              type="text"
+              placeholder={t("search.placeholder") || "Search..."}
+              className="w-full rounded-full bg-primary-foreground/10 px-4 py-1.5 text-sm text-primary-foreground placeholder:text-primary-foreground/60 focus:outline-none focus:ring-2 focus:ring-primary-foreground/50"
+            />
+          </div>
+
           <div className="flex items-center gap-4">
             <button
               onClick={toggleLocale}
@@ -111,6 +119,15 @@ export default function Navbar() {
               {isMenuOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
             </button>
           </div>
+        </div>
+
+        {/* Mobile search bar */}
+        <div className="md:hidden pb-3">
+          <input
+            type="text"
+            placeholder={t("search.placeholder") || "Search..."}
+            className="w-full rounded-md bg-primary-foreground/10 px-4 py-2 text-sm text-primary-foreground placeholder:text-primary-foreground/60 focus:outline-none focus:ring-2 focus:ring-primary-foreground/50"
+          />
         </div>
       </div>
 

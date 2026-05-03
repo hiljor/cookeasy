@@ -14,6 +14,9 @@
       "friends": "Venner",
       "profile": "Logg inn",
       "logout": "Logg ut"
+    },
+    "search": {
+      "placeholder": "Søk etter oppskrifter..."
     }
   },
   "Auth": {
