@@ -53,26 +53,19 @@ We will implement the project using a **vertically sliced approach** after the c
     - [x] **Theme Selector**: Add a UI component in Settings to switch between the pre-defined themes.
 - [x] **2.9 Auth & User Testing**: Write relevant tests for registration, login, profile management, and theme switching.
 
-### Phase 3: Social Graph (Friends & Groups)
+### Phase 3: Social Graph & Collaboration
 - [ ] **3.1 Friend System Completion**:
     - [x] **3.1.1 User Search API**: Implement `GET /api/users/search?q=...` to find users by username.
-    - [x] **3.1.2 User Search UI**: Implement a "Find Users" search component in the Friends dashboard.
-    - [ ] **3.1.3 Profile Integration**: Add Friend/Remove Friend action buttons to public profile pages (`/u/[username]`).
-- [ ] **3.2 Group Management**:
-    - [ ] **3.2.1 Backend API**: Implement CRUD for Groups (`POST /api/social/groups`, `GET`, `DELETE`).
-    - [ ] **3.2.2 Frontend UI**: Create a "Groups" dashboard and a "Create Group" multi-step dialog.
-    - [ ] **3.2.3 Member List**: Implementation of the group member view and member removal logic.
-- [ ] **3.3 Group Invite System**:
-    - [ ] **3.3.1 Invite API**: Endpoints for sending invites (`/invite`), listing pending invites, and responding to them.
-    - [ ] **3.3.2 Invite UI**: Notification-style components for group invites and a "Join" flow.
-    - [ ] **3.3.3 Leave Logic**: Implementation of the "Leave Group" functionality for members.
-- [ ] **3.4 Social Polish & Notifications**:
-    - [ ] **3.4.1 Global Badge**: Navbar indicator for total pending social actions (requests + invites).
-    - [ ] **3.4.2 Optimistic UI**: Implement React state updates before API confirmation for social actions.
-    - [ ] **3.4.3 Toast Feedback**: Standardize success/error notifications for all social interactions.
-- [ ] **3.5 Social Testing**:
-    - [ ] **3.5.1 Backend Handlers**: Write comprehensive unit tests for `social.go` handlers.
-    - [ ] **3.5.2 Frontend Components**: Write Vitest tests for the Friends dashboard, Group views, and Search.
+    - [x] **3.1.2 User Search UI**: Implement a "Find Users" search component.
+    - [x] **3.1.3 Profile Integration**: Add Friend/Remove Friend action buttons to public profile pages (`/u/[username]`).
+    - [ ] **3.1.4 Friends Popup**: Replace the "Friends" counter on the profile page with a button that opens a popup modal listing friends and providing an "Add Friend" interface.
+- [ ] **3.2 Social Polish & Notifications**:
+    - [ ] **3.2.1 Global Badge**: Navbar indicator for total pending social actions (requests).
+    - [ ] **3.2.2 Optimistic UI**: Implement React state updates for social actions.
+    - [ ] **3.2.3 Toast Feedback**: Standardize notifications for social interactions.
+- [ ] **3.3 Social Testing**:
+    - [ ] **3.3.1 Backend Handlers**: Write comprehensive unit tests for `social.go` handlers.
+    - [ ] **3.3.2 Frontend Components**: Write Vitest tests for the Friends popup, Search, and Profile interaction.
 
 ### Phase 4: Recipe System (The Core)
 - [ ] **4.1 Recipe Models**: Implement `Recipe`, `Ingredient`, and `Tag` models.
@@ -85,8 +78,8 @@ We will implement the project using a **vertically sliced approach** after the c
 
 ### Phase 5: Cookbooks & Collaboration
 - [ ] **5.1 Cookbook Models**: Implementation of `Cookbook` and join models.
-- [ ] **5.2 Cookbook UI**: Gallery view and "Create Cookbook" flow.
-- [ ] **5.3 Collaboration**: Invite system logic and Frontend collaborator management.
+- [ ] **5.2 Cookbook UI**: Gallery view, "Create Cookbook" flow, and **Collaborative Editor** for friends/family.
+- [ ] **5.3 Collaboration**: Invite system for friends to join specific Cookbooks for collective creation.
 - [ ] **5.4 Cookbook Testing**: Write relevant tests for cookbook creation and collaborator permissions.
 
 ### Phase 6: Search, Feed & Discovery

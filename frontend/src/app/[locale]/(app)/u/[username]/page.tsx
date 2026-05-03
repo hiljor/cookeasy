@@ -9,6 +9,8 @@ import { ChefHat, Lock } from "lucide-react";
 import { useTranslations } from "next-intl";
 import { EmptyState } from "@/components/ui/display/EmptyState";
 import { ProfileSkeleton } from "@/components/ui/display/Skeleton";
+import { Modal } from "@/components/ui/display/Modal";
+import { Avatar } from "@/components/ui/display/Avatar";
 import { motion, AnimatePresence } from "framer-motion";
 
 interface UserProfile {
@@ -28,6 +30,9 @@ export default function ProfilePage() {
   const [error, setError] = useState("");
   const t = useTranslations("Social.profile");
 
+  const [isFriendsModalOpen, setIsFriendsModalOpen] = useState(false);
+  const [friendsList, setFriendsList] = useState<any[]>([]);
+
   useEffect(() => {
     const fetchProfile = async () => {
       try {
@@ -43,6 +48,19 @@ export default function ProfilePage() {
     };
     fetchProfile();
   }, [username]);
+
+  useEffect(() => {
+    const fetchFriends = async () => {
+      try {
+        const res = await fetch('/api/social/friends');
+        const data = await res.json();
+        setFriendsList(data || []);
+      } catch (e) {
+        console.error(e);
+      }
+    };
+    if (isFriendsModalOpen) fetchFriends();
+  }, [isFriendsModalOpen]);
 
   const isOwnProfile = currentUser?.username === profile?.username;
 
@@ -149,10 +167,13 @@ export default function ProfilePage() {
                       <span className="block font-bold text-foreground">0</span>
                       <span className="text-sm text-gray-500 dark:text-zinc-400">Recipes</span>
                     </div>
-                    <div className="text-center">
-                      <span className="block font-bold text-foreground">0</span>
-                      <span className="text-sm text-gray-500 dark:text-zinc-400">Friends</span>
-                    </div>
+                    <button 
+                      onClick={() => setIsFriendsModalOpen(true)}
+                      className="text-center group transition-colors"
+                    >
+                      <span className="block font-bold text-foreground group-hover:text-primary">{friendsList.length}</span>
+                      <span className="text-sm text-gray-500 dark:text-zinc-400 group-hover:text-primary">Friends</span>
+                    </button>
                   </div>
                 </>
               ) : (
@@ -182,10 +203,29 @@ export default function ProfilePage() {
               } : undefined}
               />            )}
           </div>
+          
+          <Modal 
+            isOpen={isFriendsModalOpen} 
+            onClose={() => setIsFriendsModalOpen(false)} 
+            title="Friends"
+          >
+            <div className="space-y-4">
+              {friendsList.length === 0 ? (
+                <p className="text-center text-muted">No friends yet.</p>
+              ) : (
+                friendsList.map((friend) => (
+                  <div key={friend.id} className="flex items-center justify-between">
+                    <div className="flex items-center gap-3">
+                      <Avatar src={friend.profile_picture_url} username={friend.username} />
+                      <span className="font-medium text-foreground">{friend.username}</span>
+                    </div>
+                  </div>
+                ))
+              )}
+            </div>
+          </Modal>
         </motion.div>
       ) : null}
     </AnimatePresence>
   );
 }
-
-

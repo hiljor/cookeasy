@@ -42,14 +42,6 @@ export default function Navbar() {
               >
                 {t("nav.recipes")}
               </Link>
-              <Link
-                href="/friends"
-                className={`text-sm font-medium transition-colors hover:text-primary-foreground/80 ${
-                  pathname === "/friends" ? "text-primary-foreground underline decoration-2 underline-offset-4" : "text-primary-foreground/80"
-                }`}
-              >
-                {t("nav.friends")}
-              </Link>
             </div>
           </div>
 
@@ -150,17 +142,6 @@ export default function Navbar() {
               onClick={() => setIsMenuOpen(false)}
             >
               {t("nav.recipes")}
-            </Link>
-            <Link
-              href="/friends"
-              className={`block rounded-md px-3 py-2 text-base font-medium transition-colors ${
-                pathname === "/friends"
-                  ? "bg-primary-foreground/20 text-primary-foreground"
-                  : "text-primary-foreground/80 hover:bg-primary-foreground/10"
-              }`}
-              onClick={() => setIsMenuOpen(false)}
-            >
-              {t("nav.friends")}
             </Link>
             {user ? (
               <button
