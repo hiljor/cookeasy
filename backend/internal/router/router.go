@@ -66,6 +66,11 @@ func SetupRouter() *gin.Engine {
 		social.POST("/friends/respond", handlers.RespondFriendRequest)
 		social.GET("/friends", handlers.GetFriends)
 		social.DELETE("/friends/:id", handlers.RemoveFriend)
+
+		social.POST("/groups", handlers.CreateGroup)
+		social.GET("/groups", handlers.GetGroups)
+		social.GET("/groups/:id", handlers.GetGroup)
+		social.DELETE("/groups/:id", handlers.DeleteGroup)
 	}
 
 	return r

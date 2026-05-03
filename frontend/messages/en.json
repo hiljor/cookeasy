@@ -100,7 +100,8 @@
         },
         "ownRecipes": {
           "title": "Your kitchen is quiet",
-          "description": "Share your first recipe and start inspiring others with your cooking!"
+          "description": "Share your first recipe and start inspiring others with your cooking!",
+          "createRecipe": "Create First Recipe"
         }
       }
     }

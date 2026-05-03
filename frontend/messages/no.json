@@ -100,7 +100,8 @@
         },
         "ownRecipes": {
           "title": "Kjøkkenet ditt er stille",
-          "description": "Del din første oppskrift og begynn å inspirere andre med matlagingen din!"
+          "description": "Del din første oppskrift og begynn å inspirere andre med matlagingen din!",
+          "createRecipe": "Lag din første oppskrift"
         }
       }
     }

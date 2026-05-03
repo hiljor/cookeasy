@@ -46,6 +46,47 @@ export default function ProfilePage() {
 
   const isOwnProfile = currentUser?.username === profile?.username;
 
+  const [friendStatus, setFriendStatus] = useState<'none' | 'pending' | 'friends'>('none');
+
+  useEffect(() => {
+    if (!isOwnProfile && currentUser && profile) {
+      const checkStatus = async () => {
+        try {
+          const res = await fetch('/api/social/friends');
+          const friends = await res.json();
+          if (friends.some((f: any) => f.username === profile.username)) {
+            setFriendStatus('friends');
+          }
+        } catch (e) {
+          console.error(e);
+        }
+      };
+      checkStatus();
+    }
+  }, [currentUser, profile, isOwnProfile]);
+
+  const handleAddFriend = async () => {
+    try {
+      await fetch('/api/social/friends/request', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ receiver_id: profile?.id }),
+      });
+      setFriendStatus('pending');
+    } catch (e) {
+      console.error(e);
+    }
+  };
+
+  const handleRemoveFriend = async () => {
+    try {
+      await fetch(`/api/social/friends/${profile?.id}`, { method: 'DELETE' });
+      setFriendStatus('none');
+    } catch (e) {
+      console.error(e);
+    }
+  };
+
   return (
     <AnimatePresence mode="wait">
       {isLoading ? (
@@ -84,10 +125,18 @@ export default function ProfilePage() {
                   @{profile.username}
                   {profile.is_private && <Lock className="h-4 w-4 text-muted" />}
                 </h1>
-                {isOwnProfile && (
+                {isOwnProfile ? (
                   <Link href="/settings/profile">
                     <Button variant="outline" size="sm">Edit Profile</Button>
                   </Link>
+                ) : currentUser && (
+                  friendStatus === 'friends' ? (
+                    <Button variant="destructive" size="sm" onClick={handleRemoveFriend}>Remove Friend</Button>
+                  ) : friendStatus === 'pending' ? (
+                    <Button variant="outline" size="sm" disabled>Pending</Button>
+                  ) : (
+                    <Button variant="default" size="sm" onClick={handleAddFriend}>Add Friend</Button>
+                  )
                 )}
               </div>
               
@@ -124,15 +173,14 @@ export default function ProfilePage() {
               />
             ) : (
               <EmptyState 
-                icon={ChefHat}
-                title={isOwnProfile ? t("empty.ownRecipes.title") : t("empty.recipes.title")}
-                description={isOwnProfile ? t("empty.ownRecipes.description") : t("empty.recipes.description")}
-                action={isOwnProfile ? {
-                  label: "Create First Recipe",
-                  onClick: () => console.log("Create recipe clicked")
-                } : undefined}
-              />
-            )}
+              icon={ChefHat}
+              title={isOwnProfile ? t("empty.ownRecipes.title") : t("empty.recipes.title")}
+              description={isOwnProfile ? t("empty.ownRecipes.description") : t("empty.recipes.description")}
+              action={isOwnProfile ? {
+                label: t("empty.ownRecipes.createRecipe"),
+                onClick: () => console.log("Create recipe clicked")
+              } : undefined}
+              />            )}
           </div>
         </motion.div>
       ) : null}
