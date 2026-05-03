@@ -101,10 +101,20 @@ We will implement the project using a **vertically sliced approach** after the c
 - [ ] **7.3 Localization**: Final pass to ensure all UI strings are in `en.json` and `no.json`.
 - [ ] **7.4 Interaction Testing**: Write relevant tests for ratings, notification delivery, and i18n coverage.
 
-### Phase 8: Deployment & Final Polish
-- [ ] **8.1 Swagger Docs**: Generate full OpenAPI documentation using `swag`.
-- [ ] **8.2 Testing**: Complete `vitest` suites for frontend and `testify` for backend.
-- [ ] **8.3 Deployment**: Set up Vercel (FE), Render (BE), and Supabase (Prod DB).
+### Phase 9: Compliance & Legal
+- [ ] **9.1 User Agreements**:
+    - [ ] **9.1.1 Terms of Service**: Create a static page detailing platform usage rules.
+    - [ ] **9.1.2 Privacy Policy**: Create a static page detailing data collection, processing, and storage practices.
+- [ ] **9.2 Cookie Consent**:
+    - [ ] **9.2.1 Compliance Component**: Implement a non-intrusive cookie consent banner/popup that blocks non-essential cookies until accepted.
+    - [ ] **9.2.2 Policy Linking**: Link the banner to the newly created Terms of Service and Privacy Policy.
+- [ ] **9.3 Compliance Testing**:
+    - [ ] **9.3.1 Cookie Verification**: Test that non-essential scripts/cookies are not loaded before consent.
+
+### Phase 10: Deployment & Final Polish
+- [ ] **10.1 Swagger Docs**: Generate full OpenAPI documentation using `swag`.
+- [ ] **10.2 Testing**: Complete `vitest` suites for frontend and `testify` for backend.
+- [ ] **10.3 Deployment**: Set up Vercel (FE), Render (BE), and Supabase (Prod DB).
 
 ## Verification & Testing
 - **Unit Testing**: 100% coverage for business logic (Recipe scaling, Privacy checks).
