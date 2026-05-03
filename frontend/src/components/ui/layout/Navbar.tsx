@@ -11,7 +11,7 @@ export default function Navbar() {
   const locale = useLocale();
   const pathname = usePathname();
   const router = useRouter();
-  const { user, logout } = useAuth();
+  const { user, logout, isLoading: isAuthLoading } = useAuth();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
   const toggleLocale = () => {
@@ -71,7 +71,12 @@ export default function Navbar() {
               {locale}
             </button>
 
-            {user ? (
+            {isAuthLoading ? (
+              <div className="flex items-center gap-2 animate-pulse">
+                <div className="h-8 w-8 rounded-full bg-primary-foreground/20" />
+                <div className="hidden sm:block h-3 w-16 rounded-full bg-primary-foreground/20" />
+              </div>
+            ) : user ? (
               <div className="flex items-center gap-2">
                 <Link
                   href={`/u/${user.username}`}
