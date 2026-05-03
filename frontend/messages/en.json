@@ -129,5 +129,9 @@
       "ocean": "Ocean",
       "sakura": "Sakura"
     }
+  },
+  "Notifications": {
+    "title": "Notifications",
+    "noNotifications": "No new notifications."
   }
 }

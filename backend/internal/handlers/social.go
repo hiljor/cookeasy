@@ -237,18 +237,23 @@ func GetFriends(c *gin.Context) {
 	c.JSON(http.StatusOK, friends)
 }
 
-/* GetFriendRequests retrieves all pending friend requests for the current user */
-func GetFriendRequests(c *gin.Context) {
+/* GetNotifications aggregates pending social actions */
+func GetNotifications(c *gin.Context) {
 	currentUserID := c.MustGet("user_id").(uuid.UUID)
 
 	var requests []models.FriendRequest
 	if err := database.DB.Preload("Sender").Where("receiver_id = ? AND status = ?", currentUserID, models.StatusPending).Find(&requests).Error; err != nil {
-		c.JSON(http.StatusInternalServerError, gin.H{"error": "Failed to fetch friend requests"})
+		c.JSON(http.StatusInternalServerError, gin.H{"error": "Failed to fetch notifications"})
 		return
 	}
 
-	c.JSON(http.StatusOK, requests)
+	// Future: aggregate other notifications here
+	c.JSON(http.StatusOK, gin.H{
+		"friend_requests": requests,
+		"count":           len(requests),
+	})
 }
+
 
 /* RemoveFriend deletes an existing friendship between users */
 func RemoveFriend(c *gin.Context) {

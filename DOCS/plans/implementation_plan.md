@@ -58,9 +58,9 @@ We will implement the project using a **vertically sliced approach** after the c
     - [x] **3.1.1 User Search API**: Implement `GET /api/users/search?q=...` to find users by username.
     - [x] **3.1.2 User Search UI**: Implement a "Find Users" search component.
     - [x] **3.1.3 Profile Integration**: Add Friend/Remove Friend action buttons to public profile pages (`/u/[username]`).
-    - [ ] **3.1.4 Friends Popup**: Replace the "Friends" counter on the profile page with a button that opens a popup modal listing friends and providing an "Add Friend" interface.
+    - [x] **3.1.4 Friends Popup**: Replace the "Friends" counter on the profile page with a button that opens a popup modal listing friends and providing an "Add Friend" interface.
 - [ ] **3.2 Social Polish & Notifications**:
-    - [ ] **3.2.1 Global Badge**: Navbar indicator for total pending social actions (requests).
+    - [ ] **3.2.1 Notification Center**: Navbar indicator for pending social actions that acts as a button to open a detailed modal, supporting future extensions like "post liked" notifications.
     - [ ] **3.2.2 Optimistic UI**: Implement React state updates for social actions.
     - [ ] **3.2.3 Toast Feedback**: Standardize notifications for social interactions.
 - [ ] **3.3 Social Testing**:

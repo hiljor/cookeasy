@@ -2,9 +2,10 @@
 
 import { useTranslations, useLocale } from "next-intl";
 import { Link, usePathname, useRouter } from "@/i18n/routing";
-import { Menu, X, Globe, User, LogOut } from "lucide-react";
+import { Menu, X, Globe, User, LogOut, Bell } from "lucide-react";
 import { useState } from "react";
 import { useAuth } from "@/context/AuthContext";
+import { NotificationDropdown } from "@/components/ui/display/NotificationDropdown";
 
 export default function Navbar() {
   const t = useTranslations("Common");
@@ -13,6 +14,7 @@ export default function Navbar() {
   const router = useRouter();
   const { user, logout, isLoading: isAuthLoading } = useAuth();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [isNotificationsOpen, setIsNotificationsOpen] = useState(false);
 
   const toggleLocale = () => {
     const nextLocale = locale === "en" ? "no" : "en";
@@ -70,6 +72,15 @@ export default function Navbar() {
               </div>
             ) : user ? (
               <div className="flex items-center gap-2">
+                <div className="relative">
+                  <button
+                    onClick={() => setIsNotificationsOpen(!isNotificationsOpen)}
+                    className="relative p-2 text-primary-foreground hover:bg-primary-foreground/20 rounded-full transition-colors"
+                  >
+                    <Bell className="h-5 w-5" />
+                  </button>
+                  <NotificationDropdown isOpen={isNotificationsOpen} onClose={() => setIsNotificationsOpen(false)} />
+                </div>
                 <Link
                   href={`/u/${user.username}`}
                   className={`flex items-center gap-2 rounded-full border p-1 pr-3 transition-colors ${

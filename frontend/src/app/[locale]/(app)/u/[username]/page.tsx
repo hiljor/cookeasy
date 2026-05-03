@@ -5,7 +5,7 @@ import { useParams } from "next/navigation";
 import { useAuth } from "@/context/AuthContext";
 import { Button } from "@/components/ui/form/Button";
 import Link from "next/link";
-import { ChefHat, Lock } from "lucide-react";
+import { ChefHat, Lock, Search } from "lucide-react";
 import { useTranslations } from "next-intl";
 import { EmptyState } from "@/components/ui/display/EmptyState";
 import { ProfileSkeleton } from "@/components/ui/display/Skeleton";
@@ -32,6 +32,8 @@ export default function ProfilePage() {
 
   const [isFriendsModalOpen, setIsFriendsModalOpen] = useState(false);
   const [friendsList, setFriendsList] = useState<any[]>([]);
+  const [searchQuery, setSearchQuery] = useState('');
+  const [searchResults, setSearchResults] = useState<any[]>([]);
 
   useEffect(() => {
     const fetchProfile = async () => {
@@ -49,18 +51,48 @@ export default function ProfilePage() {
     fetchProfile();
   }, [username]);
 
+  const fetchFriends = async () => {
+    try {
+      const res = await fetch('/api/social/friends');
+      const data = await res.json();
+      setFriendsList(data || []);
+    } catch (e) {
+      console.error(e);
+    }
+  };
+
   useEffect(() => {
-    const fetchFriends = async () => {
-      try {
-        const res = await fetch('/api/social/friends');
-        const data = await res.json();
-        setFriendsList(data || []);
-      } catch (e) {
-        console.error(e);
-      }
-    };
     if (isFriendsModalOpen) fetchFriends();
   }, [isFriendsModalOpen]);
+
+  const handleSearchUsers = async (query: string) => {
+    setSearchQuery(query);
+    if (!query) {
+      setSearchResults([]);
+      return;
+    }
+    try {
+      const res = await fetch(`/api/users/search?q=${query}`);
+      const data = await res.json();
+      setSearchResults(data || []);
+    } catch (e) {
+      console.error(e);
+    }
+  };
+
+  const handleAddFriend = async (receiverId: string) => {
+    try {
+      await fetch('/api/social/friends/request', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ receiver_id: receiverId }),
+      });
+      setSearchQuery('');
+      setSearchResults([]);
+    } catch (e) {
+      console.error(e);
+    }
+  };
 
   const isOwnProfile = currentUser?.username === profile?.username;
 
@@ -83,7 +115,7 @@ export default function ProfilePage() {
     }
   }, [currentUser, profile, isOwnProfile]);
 
-  const handleAddFriend = async () => {
+  const handleAddCurrentProfileFriend = async () => {
     try {
       await fetch('/api/social/friends/request', {
         method: 'POST',
@@ -153,7 +185,7 @@ export default function ProfilePage() {
                   ) : friendStatus === 'pending' ? (
                     <Button variant="outline" size="sm" disabled>Pending</Button>
                   ) : (
-                    <Button variant="default" size="sm" onClick={handleAddFriend}>Add Friend</Button>
+                    <Button variant="default" size="sm" onClick={handleAddCurrentProfileFriend}>Add Friend</Button>
                   )
                 )}
               </div>
@@ -209,19 +241,49 @@ export default function ProfilePage() {
             onClose={() => setIsFriendsModalOpen(false)} 
             title="Friends"
           >
-            <div className="space-y-4">
-              {friendsList.length === 0 ? (
-                <p className="text-center text-muted">No friends yet.</p>
-              ) : (
-                friendsList.map((friend) => (
-                  <div key={friend.id} className="flex items-center justify-between">
-                    <div className="flex items-center gap-3">
+            <div className="space-y-6">
+              {isOwnProfile && (
+                <div>
+                  <h3 className="text-sm font-semibold text-muted mb-3 uppercase tracking-wider">Find Friends</h3>
+                  <div className="relative">
+                    <Search className="absolute left-3 top-2.5 h-4 w-4 text-muted" />
+                    <input
+                      type="text"
+                      placeholder="Search by username..."
+                      value={searchQuery}
+                      onChange={(e) => handleSearchUsers(e.target.value)}
+                      className="w-full rounded-md bg-card border border-border pl-10 pr-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-primary"
+                    />
+                  </div>
+                  {searchResults.length > 0 && (
+                    <div className="mt-2 space-y-2">
+                      {searchResults.map((user) => (
+                        <div key={user.id} className="flex items-center justify-between p-2 rounded hover:bg-border/20">
+                          <div className="flex items-center gap-2">
+                            <Avatar src={user.profile_picture_url} username={user.username} />
+                            <span className="text-sm font-medium">{user.username}</span>
+                          </div>
+                          <Button size="sm" variant="outline" onClick={() => handleAddFriend(user.id)}>Add</Button>
+                        </div>
+                      ))}
+                    </div>
+                  )}
+                </div>
+              )}
+              
+              <div>
+                <h3 className="text-sm font-semibold text-muted mb-3 uppercase tracking-wider">Your Friends</h3>
+                {friendsList.length === 0 ? (
+                  <p className="text-sm text-muted text-center py-4">No friends added yet.</p>
+                ) : (
+                  friendsList.map((friend) => (
+                    <div key={friend.id} className="flex items-center gap-3 p-2">
                       <Avatar src={friend.profile_picture_url} username={friend.username} />
                       <span className="font-medium text-foreground">{friend.username}</span>
                     </div>
-                  </div>
-                ))
-              )}
+                  ))
+                )}
+              </div>
             </div>
           </Modal>
         </motion.div>

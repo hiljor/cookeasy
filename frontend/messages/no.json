@@ -129,5 +129,9 @@
       "ocean": "Hav",
       "sakura": "Sakura"
     }
+  },
+  "Notifications": {
+    "title": "Varsler",
+    "noNotifications": "Ingen nye varsler."
   }
 }
