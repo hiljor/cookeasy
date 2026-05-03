@@ -116,15 +116,22 @@ export default function ProfilePage() {
   }, [currentUser, profile, isOwnProfile]);
 
   const handleAddCurrentProfileFriend = async () => {
+    const previousStatus = friendStatus;
+    setFriendStatus('pending');
+    
     try {
-      await fetch('/api/social/friends/request', {
+      const res = await fetch('/api/social/friends/request', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ receiver_id: profile?.id }),
       });
-      setFriendStatus('pending');
+      
+      if (!res.ok) throw new Error("Failed to send request");
+      toast.success("Friend request sent!");
     } catch (e) {
       console.error(e);
+      setFriendStatus(previousStatus);
+      toast.error("Failed to send friend request. Please try again.");
     }
   };
 
